@@ -24,9 +24,14 @@ const Hero = ({
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="mb-4 text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+          <div className="mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+              SMORG
+            </h1>
+          </div>
+          <h2 className="mb-4 text-3xl md:text-4xl font-bold text-foreground">
             Find Your Perfect Event
-          </h1>
+          </h2>
           <p className="mb-6 text-lg text-muted-foreground max-w-2xl mx-auto">
             Match events to your energy level and vibe
           </p>
