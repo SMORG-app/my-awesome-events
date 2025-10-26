@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 40 30% 98%; /* Porcelain White */
+    --background: 40 30% 98.5%; /* #FCFBF9 Porcelain White */
     --foreground: 0 0% 16%; /* Charcoal Ink */
 
     --card: 40 25% 87%; /* Oat Beige */
