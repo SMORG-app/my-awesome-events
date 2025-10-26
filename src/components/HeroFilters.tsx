@@ -11,9 +11,9 @@ interface HeroFiltersProps {
 }
 
 const ENERGY_LEVELS = [
-  { level: 1, emoji: '😴', label: 'Effortless', desc: 'Relaxed, sitting' },
-  { level: 2, emoji: '🚶', label: 'A Little Prep', desc: 'Light activity' },
-  { level: 3, emoji: '🔥', label: 'All-In', desc: 'Maximum effort' }
+  { level: 1, label: 'Effortless' },
+  { level: 2, label: 'A Little Prep' },
+  { level: 3, label: 'All-In' }
 ];
 
 const VIBES = [
@@ -50,15 +50,13 @@ const HeroFilters = ({
               key={energy.level}
               onClick={() => onEnergyChange(energy.level)}
               className={`
-                flex-shrink-0 snap-start px-4 py-3 rounded-xl border-2 transition-all text-center min-w-[120px]
+                flex-shrink-0 snap-start px-6 py-3 rounded-xl border-2 transition-all text-center min-w-[140px]
                 ${selectedEnergy.includes(energy.level)
                   ? 'bg-primary text-primary-foreground border-primary scale-105 shadow-lg'
                   : 'bg-card border-border hover:border-primary/50 hover:bg-accent'}
               `}
             >
-              <div className="text-2xl mb-1">{energy.emoji}</div>
-              <div className="font-semibold text-sm">{energy.label}</div>
-              <div className="text-xs opacity-70">{energy.desc}</div>
+              <div className="font-semibold">{energy.label}</div>
             </button>
           ))}
         </div>
