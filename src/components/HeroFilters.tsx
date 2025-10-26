@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { X, ChevronDown, ChevronUp } from "lucide-react";
 
 interface HeroFiltersProps {
   selectedEnergy: number[];
@@ -36,10 +38,29 @@ const HeroFilters = ({
   onVibeChange,
   onClearAll 
 }: HeroFiltersProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const hasSelections = selectedEnergy.length > 0 || selectedVibes.length > 0;
 
   return (
-    <div className="space-y-8">
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+      <div className="flex items-center justify-center mb-4">
+        <CollapsibleTrigger asChild>
+          <Button 
+            variant="outline" 
+            className="gap-2 px-6 py-3 text-base"
+          >
+            {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            {isOpen ? "Hide Filters" : "Show Filters"}
+            {hasSelections && (
+              <Badge variant="default" className="ml-2">
+                {selectedEnergy.length + selectedVibes.length}
+              </Badge>
+            )}
+          </Button>
+        </CollapsibleTrigger>
+      </div>
+      
+      <CollapsibleContent className="space-y-8">
       {/* Energy Commitment Section */}
       <div>
         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -87,20 +108,21 @@ const HeroFilters = ({
         </div>
       </div>
 
-      {/* Clear Button */}
-      {hasSelections && (
-        <div className="flex justify-center">
-          <Button
-            variant="outline"
-            onClick={onClearAll}
-            className="gap-2"
-          >
-            <X className="w-4 h-4" />
-            Clear Energy & Vibe Selections
-          </Button>
-        </div>
-      )}
-    </div>
+        {/* Clear Button */}
+        {hasSelections && (
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              onClick={onClearAll}
+              className="gap-2"
+            >
+              <X className="w-4 h-4" />
+              Clear Energy & Vibe Selections
+            </Button>
+          </div>
+        )}
+      </CollapsibleContent>
+    </Collapsible>
   );
 };
 
