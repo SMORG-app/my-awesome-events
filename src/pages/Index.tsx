@@ -115,7 +115,7 @@ const Index = () => {
         }}
       />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6">
         {/* Header with location and filters */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div className="flex flex-wrap items-center gap-2">

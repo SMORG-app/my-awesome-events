@@ -54,12 +54,12 @@ const Hero = ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-background py-8 px-4">
+    <section className="relative overflow-hidden bg-background py-6 px-4">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-5">
           {/* Logo */}
-          <div className="mb-10">
+          <div className="mb-4">
             <h1 className="text-5xl md:text-6xl font-canela font-normal uppercase flex justify-center items-center" style={{ letterSpacing: '0.08em', color: '#6C3C65' }}>
               <span>SM</span>
               <span 
@@ -75,7 +75,7 @@ const Hero = ({
             </h1>
           </div>
 
-          <h2 className="mb-4 text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="mb-3 text-3xl md:text-4xl font-bold text-foreground">
             pick your vibe. match your energy commitment.
           </h2>
           <div className="relative max-w-2xl mx-auto">

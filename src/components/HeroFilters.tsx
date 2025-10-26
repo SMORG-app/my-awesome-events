@@ -74,7 +74,7 @@ const HeroFilters = ({
   const hasSelections = selectedEnergy.length > 0 || selectedVibes.length > 0;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Energy Commitment Section */}
       <div>
         <h2 className="text-lg font-semibold mb-3">
