@@ -91,7 +91,7 @@ const EventCard = ({ event, onClick, onDismiss }: EventCardProps) => {
       </div>
       <CardContent className="p-6">
         <h3 className="text-xl font-semibold mb-3 line-clamp-2">{event.title}</h3>
-        <div className="space-y-2 text-sm text-muted-foreground">
+        <div className="space-y-2 text-sm text-foreground">
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4" />
             <span>{formattedDate}</span>
