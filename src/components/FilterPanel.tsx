@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import {
   Sheet,
@@ -22,6 +24,8 @@ interface FilterPanelProps {
   filters: EventFilters;
   onFiltersChange: (filters: EventFilters) => void;
   availablePriceRange: [number, number];
+  location: { city: string; state: string };
+  onLocationChange: (city: string, state: string) => void;
 }
 
 const INTERESTS = [
@@ -45,8 +49,9 @@ const INTERESTS = [
   { id: 'crafting', label: 'crafting' }
 ];
 
-const FilterPanel = ({ filters, onFiltersChange, availablePriceRange }: FilterPanelProps) => {
+const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, onLocationChange }: FilterPanelProps) => {
   const [minPrice, maxPrice] = availablePriceRange;
+  const [locationInput, setLocationInput] = useState(`${location.city}, ${location.state}`);
   const isPriceFiltered = filters.priceRange[0] !== minPrice || filters.priceRange[1] !== maxPrice;
   const hasActiveFilters = isPriceFiltered || filters.interests.length > 0;
 
@@ -67,8 +72,42 @@ const FilterPanel = ({ filters, onFiltersChange, availablePriceRange }: FilterPa
     });
   };
 
+  const handleLocationSubmit = () => {
+    const parts = locationInput.split(',').map(p => p.trim());
+    if (parts.length >= 2) {
+      onLocationChange(parts[0], parts[1]);
+    }
+  };
+
   const FilterContent = () => (
     <div className="space-y-8 py-4">
+      {/* Location Filter */}
+      <div>
+        <h3 className="font-semibold mb-3" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
+          location
+        </h3>
+        <div className="flex gap-2">
+          <Input
+            placeholder="City, State"
+            value={locationInput}
+            onChange={(e) => setLocationInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleLocationSubmit();
+              }
+            }}
+            style={{ fontFamily: 'Inter', fontSize: '14px' }}
+          />
+          <Button
+            size="sm"
+            onClick={handleLocationSubmit}
+            variant="outline"
+          >
+            Update
+          </Button>
+        </div>
+      </div>
+
       {/* Distance Filter */}
       <div>
         <h3 className="font-semibold mb-3" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>

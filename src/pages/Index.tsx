@@ -178,6 +178,15 @@ const Index = () => {
               filters={filters} 
               onFiltersChange={setFilters}
               availablePriceRange={availablePriceRange}
+              location={{ city: location.city, state: location.state }}
+              onLocationChange={(city, state) => {
+                updateLocation({
+                  ...location,
+                  city,
+                  state,
+                  status: 'detected'
+                });
+              }}
             />
           </div>
         </div>
