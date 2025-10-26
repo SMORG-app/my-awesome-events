@@ -14,7 +14,149 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          address: string | null
+          city: string
+          cost: number | null
+          cost_display: string | null
+          created_at: string | null
+          date: string
+          description: string | null
+          end_date: string | null
+          energy_level: number | null
+          event_types: string[] | null
+          id: string
+          image_url: string | null
+          latitude: number
+          longitude: number
+          source_url: string | null
+          state: string
+          title: string
+          updated_at: string | null
+          venue_name: string | null
+          vibes: string[] | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string
+          cost?: number | null
+          cost_display?: string | null
+          created_at?: string | null
+          date: string
+          description?: string | null
+          end_date?: string | null
+          energy_level?: number | null
+          event_types?: string[] | null
+          id?: string
+          image_url?: string | null
+          latitude: number
+          longitude: number
+          source_url?: string | null
+          state?: string
+          title: string
+          updated_at?: string | null
+          venue_name?: string | null
+          vibes?: string[] | null
+        }
+        Update: {
+          address?: string | null
+          city?: string
+          cost?: number | null
+          cost_display?: string | null
+          created_at?: string | null
+          date?: string
+          description?: string | null
+          end_date?: string | null
+          energy_level?: number | null
+          event_types?: string[] | null
+          id?: string
+          image_url?: string | null
+          latitude?: number
+          longitude?: number
+          source_url?: string | null
+          state?: string
+          title?: string
+          updated_at?: string | null
+          venue_name?: string | null
+          vibes?: string[] | null
+        }
+        Relationships: []
+      }
+      saved_events: {
+        Row: {
+          event_id: string
+          id: string
+          saved_at: string | null
+          user_id: string
+        }
+        Insert: {
+          event_id: string
+          id?: string
+          saved_at?: string | null
+          user_id: string
+        }
+        Update: {
+          event_id?: string
+          id?: string
+          saved_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_events_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_preferences: {
+        Row: {
+          created_at: string | null
+          default_city: string | null
+          default_latitude: number | null
+          default_longitude: number | null
+          default_radius_miles: number | null
+          default_state: string | null
+          id: string
+          preferred_energy_levels: number[] | null
+          preferred_event_types: string[] | null
+          preferred_vibes: string[] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          default_city?: string | null
+          default_latitude?: number | null
+          default_longitude?: number | null
+          default_radius_miles?: number | null
+          default_state?: string | null
+          id?: string
+          preferred_energy_levels?: number[] | null
+          preferred_event_types?: string[] | null
+          preferred_vibes?: string[] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          default_city?: string | null
+          default_latitude?: number | null
+          default_longitude?: number | null
+          default_radius_miles?: number | null
+          default_state?: string | null
+          id?: string
+          preferred_energy_levels?: number[] | null
+          preferred_event_types?: string[] | null
+          preferred_vibes?: string[] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
