@@ -30,7 +30,7 @@ const Hero = ({
             </h1>
           </div>
           <h2 className="mb-4 text-3xl md:text-4xl font-bold text-foreground">
-            Pick your vibe. Match your energy commitment.
+            pick your vibe. match your energy commitment.
           </h2>
           <p className="mb-6 text-lg text-muted-foreground max-w-2xl mx-auto">
             Match events to your energy level and vibe
