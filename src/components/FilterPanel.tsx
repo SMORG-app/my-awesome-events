@@ -52,6 +52,7 @@ const INTERESTS = [
 const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, onLocationChange }: FilterPanelProps) => {
   const [minPrice, maxPrice] = availablePriceRange;
   const [locationInput, setLocationInput] = useState(`${location.city}, ${location.state}`);
+  const [isEditingLocation, setIsEditingLocation] = useState(false);
   const isPriceFiltered = filters.priceRange[0] !== minPrice || filters.priceRange[1] !== maxPrice;
   const hasActiveFilters = isPriceFiltered || filters.interests.length > 0;
 
@@ -76,6 +77,7 @@ const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, 
     const parts = locationInput.split(',').map(p => p.trim());
     if (parts.length >= 2) {
       onLocationChange(parts[0], parts[1]);
+      setIsEditingLocation(false);
     }
   };
 
@@ -90,11 +92,18 @@ const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, 
           <Input
             placeholder="City, State"
             value={locationInput}
-            onChange={(e) => setLocationInput(e.target.value)}
+            onChange={(e) => {
+              setLocationInput(e.target.value);
+              setIsEditingLocation(true);
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 handleLocationSubmit();
               }
+            }}
+            onFocus={() => setIsEditingLocation(true)}
+            onBlur={() => {
+              // Don't reset on blur, only on successful submit
             }}
             style={{ fontFamily: 'Inter', fontSize: '14px' }}
           />
@@ -102,6 +111,7 @@ const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, 
             size="sm"
             onClick={handleLocationSubmit}
             variant="outline"
+            onMouseDown={(e) => e.preventDefault()} // Prevent input blur when clicking button
           >
             Update
           </Button>
