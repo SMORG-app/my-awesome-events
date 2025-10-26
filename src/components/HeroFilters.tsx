@@ -72,9 +72,10 @@ const HeroFilters = ({
                     onClick={() => onEnergyChange(energy.level)}
                     className={`
                       flex-shrink-0 snap-start px-6 py-3 rounded-xl border-2 transition-all text-center min-w-[140px] relative
+                      ${energy.color}
                       ${selectedEnergy.includes(energy.level)
-                        ? `${energy.color} scale-105 shadow-lg`
-                        : `bg-card border-border hover:border-primary/50 hover:bg-accent`}
+                        ? 'scale-105 shadow-lg ring-2 ring-offset-2 ring-foreground'
+                        : 'opacity-80 hover:opacity-100'}
                     `}
                   >
                     <div className="font-semibold flex items-center justify-center gap-1">
