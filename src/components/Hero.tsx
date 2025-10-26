@@ -21,7 +21,7 @@ const Hero = ({ onSearch }: HeroProps) => {
           Discover Events That Match Your Interests
         </h1>
         <p className="mb-8 text-xl text-muted-foreground">
-          Stop browsing countless websites. Find all the events you care about in one place.
+          Find all the events that you care about, that fit your energy level and desired vibes.
         </p>
         <div className="relative mx-auto max-w-2xl">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
