@@ -24,14 +24,19 @@ interface FilterPanelProps {
 }
 
 const INTERESTS = [
-  'Music & Concerts',
-  'Sports',
-  'Arts & Theater',
-  'Food & Drink',
-  'Outdoor & Adventure',
-  'Classes & Learning',
-  'Tech & Business',
-  'Health & Wellness'
+  { id: 'networking', label: 'networking' },
+  { id: 'chill', label: 'chill' },
+  { id: 'party', label: 'party' },
+  { id: 'intellectual', label: 'intellectual' },
+  { id: 'wellness', label: 'wellness' },
+  { id: 'dog-friendly', label: 'dog-friendly' },
+  { id: 'spiritual', label: 'spiritual' },
+  { id: 'mindful', label: 'mindful' },
+  { id: 'active', label: 'active' },
+  { id: 'cultural', label: 'cultural' },
+  { id: 'outdoor', label: 'outdoor' },
+  { id: 'creative', label: 'creative' },
+  { id: 'crafting', label: 'crafting' }
 ];
 
 const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
@@ -39,10 +44,10 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
     filters.maxPrice !== null ||
     filters.interests.length > 0;
 
-  const toggleInterest = (interest: string) => {
-    const newInterests = filters.interests.includes(interest)
-      ? filters.interests.filter(i => i !== interest)
-      : [...filters.interests, interest];
+  const toggleInterest = (interestId: string) => {
+    const newInterests = filters.interests.includes(interestId)
+      ? filters.interests.filter(i => i !== interestId)
+      : [...filters.interests, interestId];
     onFiltersChange({ ...filters, interests: newInterests });
   };
 
@@ -101,18 +106,47 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
 
       {/* Interest Topics */}
       <div>
-        <h3 className="font-semibold mb-3">Interests</h3>
-        <div className="flex gap-2 flex-wrap">
-          {INTERESTS.map(interest => (
-            <Badge
-              key={interest}
-              variant={filters.interests.includes(interest) ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() => toggleInterest(interest)}
-            >
-              {interest}
-            </Badge>
-          ))}
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-semibold">interests</h3>
+          {filters.interests.length > 0 && (
+            <span className="text-sm text-muted-foreground">
+              {filters.interests.length} selected
+            </span>
+          )}
+        </div>
+        <div className="flex gap-3 flex-wrap max-h-[300px] overflow-y-auto">
+          {INTERESTS.map(interest => {
+            const isSelected = filters.interests.includes(interest.id);
+            const hasAnySelection = filters.interests.length > 0;
+            
+            return (
+              <button
+                key={interest.id}
+                onClick={() => toggleInterest(interest.id)}
+                style={{
+                  backgroundColor: isSelected ? '#6C3C65' : '#E8E2D8',
+                  color: isSelected ? '#FCFBF9' : '#2A2A2A',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                  opacity: hasAnySelection && !isSelected ? 0.7 : 1
+                }}
+                className="cursor-pointer px-3 py-1.5 rounded-full font-medium text-[15px] transition-all duration-200 ease-in-out hover:scale-105 whitespace-nowrap"
+                onMouseEnter={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = '#F4B6A0';
+                    e.currentTarget.style.color = '#FCFBF9';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = '#E8E2D8';
+                    e.currentTarget.style.color = '#2A2A2A';
+                  }
+                }}
+              >
+                {interest.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -136,7 +170,7 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
           Filters
           {hasActiveFilters && (
           <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center">
-              {filters.interests.length}
+              {(filters.maxPrice !== null ? 1 : 0) + filters.interests.length}
             </span>
           )}
         </Button>

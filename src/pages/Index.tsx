@@ -90,7 +90,6 @@ const Index = () => {
         onSearch={setSearchQuery}
         selectedEnergy={filters.energyLevels}
         selectedVibes={filters.vibes}
-        selectedInterests={filters.interests}
         onEnergyChange={(levels) => {
           // Check if all levels in the group are selected
           const allSelected = levels.every(level => filters.energyLevels.includes(level));
@@ -111,14 +110,8 @@ const Index = () => {
             : [...filters.vibes, vibeId];
           setFilters({ ...filters, vibes: newVibes });
         }}
-        onInterestChange={(interestId) => {
-          const newInterests = filters.interests.includes(interestId)
-            ? filters.interests.filter(i => i !== interestId)
-            : [...filters.interests, interestId];
-          setFilters({ ...filters, interests: newInterests });
-        }}
         onClearEnergyVibe={() => {
-          setFilters({ ...filters, energyLevels: [], vibes: [], interests: [] });
+          setFilters({ ...filters, energyLevels: [], vibes: [] });
         }}
       />
       
