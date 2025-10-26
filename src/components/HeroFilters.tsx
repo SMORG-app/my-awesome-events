@@ -96,7 +96,7 @@ const HeroFilters = ({
       {/* Vibe Section */}
       <div>
         <h2 className="text-lg font-semibold mb-3">
-          What's your vibe?
+          what's your vibe?
         </h2>
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
           {VIBES.map(vibe => (
