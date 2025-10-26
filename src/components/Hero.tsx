@@ -20,7 +20,7 @@ const Hero = ({
   onClearEnergyVibe 
 }: HeroProps) => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 to-background py-8 px-4">
+    <section className="relative overflow-hidden bg-background py-8 px-4">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-6">
