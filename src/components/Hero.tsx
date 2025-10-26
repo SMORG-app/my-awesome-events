@@ -29,12 +29,20 @@ const Hero = ({
             <h1 className="text-5xl md:text-6xl font-canela font-normal uppercase flex justify-center items-center" style={{ letterSpacing: '0.08em', color: '#6C3C65' }}>
               <span>SM</span>
               <span 
-                className="inline-block"
+                className="inline-block transition-all duration-1200 ease-in-out hover:animate-gradient-shift"
                 style={{
                   background: 'linear-gradient(180deg, #CDE2D0 0%, #F4B6A0 50%, #6C3C65 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
+                  backgroundClip: 'text',
+                  backgroundSize: '100% 200%',
+                  transition: 'background-position 1.2s ease-in-out'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundPosition = '0% 100%';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundPosition = '0% 0%';
                 }}
               >
                 O
