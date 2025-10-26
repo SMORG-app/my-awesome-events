@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { X, Zap } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { X, Zap, Info } from "lucide-react";
 
 interface HeroFiltersProps {
   selectedEnergy: number[];
@@ -16,7 +17,7 @@ const ENERGY_COMMITMENTS = [
     levels: [1, 2],
     iconCount: 1,
     label: 'effortless',
-    description: 'minimal effort, just show up',
+    tooltip: 'Minimal planning, low cost, nearby, easy to bail or attend spontaneously.',
     bgColor: 'bg-mint-500',
     borderColor: 'border-mint-500',
     textColor: 'text-mint-700',
@@ -30,7 +31,7 @@ const ENERGY_COMMITMENTS = [
     levels: [3, 4],
     iconCount: 2,
     label: 'a little prep',
-    description: 'some planning, moderate energy',
+    tooltip: 'Requires light planning — tickets, transport, maybe a friend or outfit change.',
     bgColor: 'bg-salmon-500',
     borderColor: 'border-salmon-500',
     textColor: 'text-salmon-700',
@@ -44,7 +45,7 @@ const ENERGY_COMMITMENTS = [
     levels: [5, 6],
     iconCount: 3,
     label: 'all-in',
-    description: 'full commitment, high energy',
+    tooltip: 'More planning, cost, or social energy; multi-hour, dress-up, travel or parking involved.',
     bgColor: 'bg-mauve-500',
     borderColor: 'border-mauve-500',
     textColor: 'text-white',
@@ -87,32 +88,40 @@ const HeroFilters = ({
           what energy commitment do you want to make?
         </h2>
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
-          {ENERGY_COMMITMENTS.map(commitment => {
-            const isSelected = commitment.levels.some(level => selectedEnergy.includes(level));
-            
-            return (
-              <button
-                key={commitment.id}
-                onClick={() => onEnergyChange(commitment.levels)}
-                className={`
-                  flex-shrink-0 snap-start px-6 py-4 rounded-xl border-2 transition-all min-w-[160px]
-                  ${isSelected
-                    ? `${commitment.selectedBg} ${commitment.selectedText} ${commitment.selectedBorder} scale-105 shadow-lg` 
-                    : `${commitment.bgColor} ${commitment.textColor} ${commitment.borderColor} ${commitment.hoverBg} opacity-90 hover:opacity-100`}
-                `}
-              >
-                <div className="flex gap-1 mb-1 justify-center">
-                  {[...Array(commitment.iconCount)].map((_, i) => (
-                    <Zap key={i} className="w-5 h-5" fill="currentColor" />
-                  ))}
-                </div>
-                <div className="font-semibold text-lg">
-                  {commitment.label}
-                </div>
-                <div className="text-xs opacity-90 mt-1">{commitment.description}</div>
-              </button>
-            );
-          })}
+          <TooltipProvider>
+            {ENERGY_COMMITMENTS.map(commitment => {
+              const isSelected = commitment.levels.some(level => selectedEnergy.includes(level));
+              
+              return (
+                <Tooltip key={commitment.id}>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => onEnergyChange(commitment.levels)}
+                      className={`
+                        flex-shrink-0 snap-start px-6 py-4 rounded-xl border-2 transition-all min-w-[160px]
+                        ${isSelected
+                          ? `${commitment.selectedBg} ${commitment.selectedText} ${commitment.selectedBorder} scale-105 shadow-lg` 
+                          : `${commitment.bgColor} ${commitment.textColor} ${commitment.borderColor} ${commitment.hoverBg} opacity-90 hover:opacity-100`}
+                      `}
+                    >
+                      <div className="flex gap-0.5 mb-2 justify-center">
+                        {[...Array(commitment.iconCount)].map((_, i) => (
+                          <Zap key={i} className="w-3.5 h-3.5" fill="currentColor" />
+                        ))}
+                      </div>
+                      <div className="font-semibold text-lg flex items-center justify-center gap-1">
+                        {commitment.label}
+                        <Info className="w-3 h-3 opacity-50" />
+                      </div>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>{commitment.tooltip}</p>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </TooltipProvider>
         </div>
       </div>
 
