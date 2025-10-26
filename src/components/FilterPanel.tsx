@@ -34,53 +34,16 @@ const INTERESTS = [
   'Health & Wellness'
 ];
 
-const ENERGY_LEVELS = [
-  { value: 1, label: '😴 Chill', desc: 'Sitting, watching' },
-  { value: 2, label: '🚶 Easy', desc: 'Light walking' },
-  { value: 3, label: '🏃 Moderate', desc: 'Participating' },
-  { value: 4, label: '💪 Active', desc: 'Dancing, standing' },
-  { value: 5, label: '🔥 Intense', desc: 'Sports, all-day' }
-];
-
-const VIBES = [
-  { id: 'date-night', label: '💕 Date Night' },
-  { id: 'family-kids', label: '👨‍👩‍👧‍👦 Family with Kids' },
-  { id: 'friends-night', label: '🎉 Night Out with Friends' },
-  { id: 'solo-adventure', label: '👤 Solo Adventure' },
-  { id: 'meeting-new', label: '👥 Meeting New People' },
-  { id: 'seasonal-holiday', label: '🎄 Seasonal/Holiday' },
-  { id: 'relaxing-wellness', label: '🧘 Relaxing/Wellness' },
-  { id: 'learning-new', label: '🎓 Learning Something New' },
-  { id: 'competitive-sports', label: '🏆 Competitive/Sports' },
-  { id: 'creative-artsy', label: '🎨 Creative/Artsy' }
-];
-
 const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
   const hasActiveFilters = 
     filters.maxPrice !== null ||
-    filters.interests.length > 0 ||
-    filters.energyLevels.length > 0 ||
-    filters.vibes.length > 0;
+    filters.interests.length > 0;
 
   const toggleInterest = (interest: string) => {
     const newInterests = filters.interests.includes(interest)
       ? filters.interests.filter(i => i !== interest)
       : [...filters.interests, interest];
     onFiltersChange({ ...filters, interests: newInterests });
-  };
-
-  const toggleEnergyLevel = (level: number) => {
-    const newLevels = filters.energyLevels.includes(level)
-      ? filters.energyLevels.filter(l => l !== level)
-      : [...filters.energyLevels, level];
-    onFiltersChange({ ...filters, energyLevels: newLevels });
-  };
-
-  const toggleVibe = (vibeId: string) => {
-    const newVibes = filters.vibes.includes(vibeId)
-      ? filters.vibes.filter(v => v !== vibeId)
-      : [...filters.vibes, vibeId];
-    onFiltersChange({ ...filters, vibes: newVibes });
   };
 
   const clearAllFilters = () => {
@@ -153,41 +116,6 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
         </div>
       </div>
 
-      {/* Energy Levels */}
-      <div>
-        <h3 className="font-semibold mb-3">Energy Commitment</h3>
-        <div className="space-y-2">
-          {ENERGY_LEVELS.map(level => (
-            <Badge
-              key={level.value}
-              variant={filters.energyLevels.includes(level.value) ? "default" : "outline"}
-              className="cursor-pointer w-full justify-start text-left py-2"
-              onClick={() => toggleEnergyLevel(level.value)}
-            >
-              <span className="font-semibold">{level.label}</span>
-              <span className="ml-2 text-xs opacity-70">{level.desc}</span>
-            </Badge>
-          ))}
-        </div>
-      </div>
-
-      {/* Vibes */}
-      <div>
-        <h3 className="font-semibold mb-3">Vibes</h3>
-        <div className="grid grid-cols-2 gap-2">
-          {VIBES.map(vibe => (
-            <Badge
-              key={vibe.id}
-              variant={filters.vibes.includes(vibe.id) ? "default" : "outline"}
-              className="cursor-pointer justify-center py-2"
-              onClick={() => toggleVibe(vibe.id)}
-            >
-              {vibe.label}
-            </Badge>
-          ))}
-        </div>
-      </div>
-
       {hasActiveFilters && (
         <Button
           variant="outline"
@@ -207,8 +135,8 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
         <Button variant="outline" className="relative">
           Filters
           {hasActiveFilters && (
-            <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center">
-              {filters.interests.length + filters.energyLevels.length + filters.vibes.length}
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center">
+              {filters.interests.length}
             </span>
           )}
         </Button>

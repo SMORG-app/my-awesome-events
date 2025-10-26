@@ -59,33 +59,50 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Hero onSearch={setSearchQuery} />
+      <Hero 
+        onSearch={setSearchQuery}
+        selectedEnergy={filters.energyLevels}
+        selectedVibes={filters.vibes}
+        onEnergyChange={(level) => {
+          const newLevels = filters.energyLevels.includes(level)
+            ? filters.energyLevels.filter(l => l !== level)
+            : [...filters.energyLevels, level];
+          setFilters({ ...filters, energyLevels: newLevels });
+        }}
+        onVibeChange={(vibeId) => {
+          const newVibes = filters.vibes.includes(vibeId)
+            ? filters.vibes.filter(v => v !== vibeId)
+            : [...filters.vibes, vibeId];
+          setFilters({ ...filters, vibes: newVibes });
+        }}
+        onClearEnergyVibe={() => {
+          setFilters({ ...filters, energyLevels: [], vibes: [] });
+        }}
+      />
       
       <div className="container mx-auto px-4 py-8">
+        {/* Header with location and filters */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-bold">
-              {hasActiveFilters ? 'My Events' : 'Events Near You'}
-            </h2>
-            {location.status === 'detecting' ? (
-              <Badge variant="outline">Detecting location...</Badge>
-            ) : (
-              <Badge variant="outline">
+          <div className="flex flex-wrap items-center gap-2">
+            {location.city && (
+              <Badge variant="outline" className="text-sm">
                 📍 {location.city}, {location.state}
               </Badge>
             )}
+            <Badge variant="secondary" className="text-sm">
+              {filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''} found
+            </Badge>
+            {(filters.energyLevels.length > 0 || filters.vibes.length > 0) && (
+              <Badge variant="default" className="text-sm">
+                ⚡ {filters.energyLevels.length + filters.vibes.length} active {filters.energyLevels.length + filters.vibes.length === 1 ? 'filter' : 'filters'}
+              </Badge>
+            )}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <ViewToggle view={view} onViewChange={setView} />
             <FilterPanel filters={filters} onFiltersChange={setFilters} />
           </div>
         </div>
-
-        {hasActiveFilters && (
-          <p className="text-muted-foreground mb-4">
-            Found {filteredEvents.length} events matching your preferences
-          </p>
-        )}
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
