@@ -211,11 +211,11 @@ const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, 
                     boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
                     opacity: hasAnySelection && !isSelected ? 0.7 : 1
                   }}
-                  className="cursor-pointer px-3 py-1.5 rounded-full font-medium text-[15px] transition-all duration-200 ease-in-out hover:scale-105 whitespace-nowrap"
+                  className="cursor-pointer px-3 py-1.5 rounded-full font-medium text-[15px] transition-all duration-200 ease-in-out hover:scale-105 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[#6C3C65] focus:ring-offset-4"
                   onMouseEnter={(e) => {
                     if (!isSelected) {
-                      e.currentTarget.style.backgroundColor = '#F4B6A0';
-                      e.currentTarget.style.color = '#FCFBF9';
+                      e.currentTarget.style.backgroundColor = '#B2AFA8';
+                      e.currentTarget.style.color = '#2A2A2A';
                     }
                   }}
                   onMouseLeave={(e) => {
