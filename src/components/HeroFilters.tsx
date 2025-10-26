@@ -33,18 +33,18 @@ const ENERGY_LEVELS = [
 ];
 
 const VIBES = [
-  { id: 'family-friendly', label: 'Family-Friendly' },
-  { id: 'date-night', label: 'Date Night' },
-  { id: 'solo-time', label: 'Solo Time' },
-  { id: 'friends-outing', label: 'Friends Outing' },
-  { id: 'work-networking', label: 'Work / Networking' },
-  { id: 'chill-low-key', label: 'Chill / Low-Key' },
-  { id: 'high-energy-party', label: 'High Energy / Party' },
-  { id: 'thoughtful-intellectual', label: 'Thoughtful / Intellectual' },
-  { id: 'rejuvenating-wellness', label: 'Rejuvenating / Wellness' },
-  { id: 'intimate-niche', label: 'Intimate / Niche' },
-  { id: 'dog-friendly', label: 'Dog-Friendly' },
-  { id: 'spiritual-mindful', label: 'Spiritual / Mindful' }
+  { id: 'family-friendly', label: 'family-friendly' },
+  { id: 'date-night', label: 'date night' },
+  { id: 'solo-time', label: 'solo time' },
+  { id: 'friends-outing', label: 'friends outing' },
+  { id: 'work-networking', label: 'work / networking' },
+  { id: 'chill-low-key', label: 'chill / low-key' },
+  { id: 'high-energy-party', label: 'high energy / party' },
+  { id: 'thoughtful-intellectual', label: 'thoughtful / intellectual' },
+  { id: 'rejuvenating-wellness', label: 'rejuvenating / wellness' },
+  { id: 'intimate-niche', label: 'intimate / niche' },
+  { id: 'dog-friendly', label: 'dog-friendly' },
+  { id: 'spiritual-mindful', label: 'spiritual / mindful' }
 ];
 
 const HeroFilters = ({ 
