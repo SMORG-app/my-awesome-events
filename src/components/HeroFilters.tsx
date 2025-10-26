@@ -11,11 +11,9 @@ interface HeroFiltersProps {
 }
 
 const ENERGY_LEVELS = [
-  { level: 1, emoji: '😴', label: 'Chill', desc: 'Relaxed, sitting' },
-  { level: 2, emoji: '🚶', label: 'Easy', desc: 'Light activity' },
-  { level: 3, emoji: '🏃', label: 'Moderate', desc: 'Participating' },
-  { level: 4, emoji: '💪', label: 'Active', desc: 'High energy' },
-  { level: 5, emoji: '🔥', label: 'Intense', desc: 'Maximum effort' }
+  { level: 1, emoji: '😴', label: 'Effortless', desc: 'Relaxed, sitting' },
+  { level: 2, emoji: '🚶', label: 'A Little Prep', desc: 'Light activity' },
+  { level: 3, emoji: '🔥', label: 'All-In', desc: 'Maximum effort' }
 ];
 
 const VIBES = [
