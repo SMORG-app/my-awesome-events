@@ -39,10 +39,10 @@ export const useEvents = (location: UserLocation, filters: EventFilters) => {
         .gte('date', new Date().toISOString())
         .order('date', { ascending: true });
 
-      // Apply filters
-      if (filters.maxPrice !== null) {
-        query = query.lte('cost', filters.maxPrice);
-      }
+      // Apply price range filter
+      query = query
+        .gte('cost', filters.priceRange[0])
+        .lte('cost', filters.priceRange[1]);
 
       if (filters.energyLevels.length > 0) {
         query = query.in('energy_level', filters.energyLevels);

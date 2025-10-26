@@ -26,7 +26,7 @@ const Index = () => {
   });
   const [filters, setFilters] = useState<EventFilters>({
     distance: 25,
-    maxPrice: null,
+    priceRange: [0, 1000],
     interests: [],
     energyLevels: [],
     vibes: []
@@ -40,6 +40,28 @@ const Index = () => {
   const { events, loading } = useEvents(location, filters);
   const { dismissedEvents, dismissEvent, undoDismiss, clearAllDismissed } = useDismissedEvents();
   const { toast } = useToast();
+
+  // Calculate available price range from events
+  const availablePriceRange: [number, number] = events.length > 0
+    ? [
+        Math.min(...events.map(e => e.cost)),
+        Math.max(...events.map(e => e.cost))
+      ]
+    : [0, 0];
+
+  // Update price range when events change
+  useEffect(() => {
+    if (events.length > 0 && availablePriceRange[0] !== availablePriceRange[1]) {
+      const [newMin, newMax] = availablePriceRange;
+      setFilters(prev => ({
+        ...prev,
+        priceRange: [
+          Math.max(newMin, Math.min(prev.priceRange[0], newMax)),
+          Math.min(newMax, Math.max(prev.priceRange[1], newMin))
+        ]
+      }));
+    }
+  }, [events.length]);
 
   // Filter by search query and dismissed events
   const filteredEvents = events.filter((event) => {
@@ -78,8 +100,10 @@ const Index = () => {
     });
   };
 
+  const isPriceFiltered = availablePriceRange[0] !== availablePriceRange[1] && 
+    (filters.priceRange[0] !== availablePriceRange[0] || filters.priceRange[1] !== availablePriceRange[1]);
   const hasActiveFilters = 
-    filters.maxPrice !== null ||
+    isPriceFiltered ||
     filters.interests.length > 0 ||
     filters.energyLevels.length > 0 ||
     filters.vibes.length > 0;
@@ -146,7 +170,11 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-2">
             <ViewToggle view={view} onViewChange={setView} />
-            <FilterPanel filters={filters} onFiltersChange={setFilters} />
+            <FilterPanel 
+              filters={filters} 
+              onFiltersChange={setFilters}
+              availablePriceRange={availablePriceRange}
+            />
           </div>
         </div>
 

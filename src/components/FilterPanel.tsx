@@ -12,7 +12,7 @@ import {
 
 export interface EventFilters {
   distance: number;
-  maxPrice: number | null;
+  priceRange: [number, number];
   interests: string[];
   energyLevels: number[];
   vibes: string[];
@@ -21,6 +21,7 @@ export interface EventFilters {
 interface FilterPanelProps {
   filters: EventFilters;
   onFiltersChange: (filters: EventFilters) => void;
+  availablePriceRange: [number, number];
 }
 
 const INTERESTS = [
@@ -44,10 +45,10 @@ const INTERESTS = [
   { id: 'crafting', label: 'crafting' }
 ];
 
-const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
-  const hasActiveFilters = 
-    filters.maxPrice !== null ||
-    filters.interests.length > 0;
+const FilterPanel = ({ filters, onFiltersChange, availablePriceRange }: FilterPanelProps) => {
+  const [minPrice, maxPrice] = availablePriceRange;
+  const isPriceFiltered = filters.priceRange[0] !== minPrice || filters.priceRange[1] !== maxPrice;
+  const hasActiveFilters = isPriceFiltered || filters.interests.length > 0;
 
   const toggleInterest = (interestId: string) => {
     const newInterests = filters.interests.includes(interestId)
@@ -59,7 +60,7 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
   const clearAllFilters = () => {
     onFiltersChange({
       distance: 25,
-      maxPrice: null,
+      priceRange: availablePriceRange,
       interests: [],
       energyLevels: [],
       vibes: []
@@ -70,7 +71,9 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
     <div className="space-y-8 py-4">
       {/* Distance Filter */}
       <div>
-        <h3 className="font-semibold mb-3">Distance: {filters.distance} miles</h3>
+        <h3 className="font-semibold mb-3" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
+          distance from location: {filters.distance} miles
+        </h3>
         <Slider
           value={[filters.distance]}
           onValueChange={([value]) => onFiltersChange({ ...filters, distance: value })}
@@ -79,34 +82,45 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
           step={1}
           className="w-full"
         />
-        <div className="flex justify-between text-xs text-muted-foreground mt-1">
+        <div className="flex justify-between text-xs mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '13px' }}>
           <span>1 mi</span>
           <span>100 mi</span>
         </div>
       </div>
 
-      {/* Price Filter */}
+      {/* Price Range Filter */}
       <div>
-        <h3 className="font-semibold mb-3">Max Price</h3>
-        <div className="flex gap-2 flex-wrap">
-          <Badge
-            variant={filters.maxPrice === 0 ? "default" : "outline"}
-            className="cursor-pointer"
-            onClick={() => onFiltersChange({ ...filters, maxPrice: filters.maxPrice === 0 ? null : 0 })}
-          >
-            Free
-          </Badge>
-          {[25, 50, 100].map(price => (
-            <Badge
-              key={price}
-              variant={filters.maxPrice === price ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() => onFiltersChange({ ...filters, maxPrice: filters.maxPrice === price ? null : price })}
-            >
-              Under ${price}
-            </Badge>
-          ))}
+        <div className="mb-3">
+          <h3 className="font-semibold" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
+            price range
+          </h3>
+          {minPrice === maxPrice && minPrice === 0 ? (
+            <p className="text-sm mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter' }}>
+              All events are free
+            </p>
+          ) : (
+            <p className="text-sm mt-1" style={{ color: '#6C3C65', fontFamily: 'Inter', fontWeight: 500 }}>
+              ${filters.priceRange[0]} – ${filters.priceRange[1]}
+            </p>
+          )}
         </div>
+        {!(minPrice === maxPrice && minPrice === 0) && (
+          <>
+            <Slider
+              value={filters.priceRange}
+              onValueChange={(value) => onFiltersChange({ ...filters, priceRange: value as [number, number] })}
+              min={minPrice}
+              max={maxPrice}
+              step={5}
+              className="w-full"
+              disabled={minPrice === maxPrice}
+            />
+            <div className="flex justify-between text-xs mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '13px' }}>
+              <span>${minPrice}</span>
+              <span>${maxPrice}</span>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Interest Topics */}
@@ -175,7 +189,7 @@ const FilterPanel = ({ filters, onFiltersChange }: FilterPanelProps) => {
           Filters
           {hasActiveFilters && (
           <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center">
-              {(filters.maxPrice !== null ? 1 : 0) + filters.interests.length}
+              {(isPriceFiltered ? 1 : 0) + filters.interests.length}
             </span>
           )}
         </Button>
