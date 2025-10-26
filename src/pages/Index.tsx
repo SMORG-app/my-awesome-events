@@ -5,6 +5,7 @@ import EventModal from "@/components/EventModal";
 import FilterPanel, { EventFilters } from "@/components/FilterPanel";
 import ViewToggle from "@/components/ViewToggle";
 import CalendarView from "@/components/CalendarView";
+import LocationBadge from "@/components/LocationBadge";
 import { useLocation } from "@/hooks/useLocation";
 import { useEvents, Event } from "@/hooks/useEvents";
 import { useDismissedEvents } from "@/hooks/useDismissedEvents";
@@ -36,7 +37,7 @@ const Index = () => {
     localStorage.setItem("smorgView", view);
   }, [view]);
 
-  const location = useLocation();
+  const { location, detectLocation, updateLocation, resetLocation } = useLocation();
   const { events, loading } = useEvents(location, filters);
   const { dismissedEvents, dismissEvent, undoDismiss, clearAllDismissed } = useDismissedEvents();
   const { toast } = useToast();
@@ -144,9 +145,12 @@ const Index = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div className="flex flex-wrap items-center gap-2">
             {location.city && (
-              <Badge variant="outline" className="text-sm">
-                📍 {location.city}, {location.state}
-              </Badge>
+              <LocationBadge
+                location={location}
+                onLocationChange={updateLocation}
+                onDetectLocation={detectLocation}
+                onResetLocation={resetLocation}
+              />
             )}
             <Badge variant="secondary" className="text-sm">
               {filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''} found
