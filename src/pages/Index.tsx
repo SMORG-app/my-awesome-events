@@ -239,13 +239,16 @@ const Index = () => {
       />
 
       {/* Footer Section */}
-      <footer className="border-t border-border mt-16 py-12 bg-card/30">
-        <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className="text-2xl font-canela lowercase mb-6 text-foreground">
+      <footer className="border-t border-border mt-16 py-8 bg-card/30">
+        <div className="container mx-auto px-4 max-w-[600px] text-center">
+          <h2 className="text-xl font-canela lowercase mb-4 text-foreground">
             About Smorg
           </h2>
-          <p className="text-base font-inter text-foreground/80 leading-relaxed">
-            Smorg is a local discovery platform that helps you find experiences that match your vibe and energy level. Whether you want something calm, creative, or high energy, Smorg curates events that fit how you actually feel, not just what's trending.
+          <p className="text-sm font-inter text-foreground/80 leading-relaxed mb-3">
+            Smorg is a local discovery platform that helps you find experiences that match your vibe and energy level. Whether you want something calm, creative, or high energy, Smorg curates events that fit how you actually feel, not just what&apos;s trending.
+          </p>
+          <p className="text-sm font-inter text-foreground/80 leading-relaxed">
+            The name comes from &quot;smorgasbord,&quot; a Swedish word for a spread of different tastes — we just made it digital (and skipped the meatballs).
           </p>
         </div>
       </footer>
