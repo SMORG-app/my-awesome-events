@@ -15,17 +15,20 @@ const ENERGY_LEVELS = [
   { 
     level: 1, 
     label: 'Effortless',
-    tooltip: 'Minimal planning, low cost, nearby, easy to bail or attend spontaneously.'
+    tooltip: 'Minimal planning, low cost, nearby, easy to bail or attend spontaneously.',
+    color: 'bg-[#CDE2D0] border-[#CDE2D0] hover:bg-[#CDE2D0]/80'
   },
   { 
     level: 2, 
     label: 'A Little Prep',
-    tooltip: 'Requires light planning — tickets, transport, maybe a friend or outfit change.'
+    tooltip: 'Requires light planning — tickets, transport, maybe a friend or outfit change.',
+    color: 'bg-[#F4B6A0] border-[#F4B6A0] hover:bg-[#F4B6A0]/80'
   },
   { 
     level: 3, 
     label: 'All-In',
-    tooltip: 'More planning, cost, or social energy; multi-hour, dress-up, travel or parking involved.'
+    tooltip: 'More planning, cost, or social energy; multi-hour, dress-up, travel or parking involved.',
+    color: 'bg-[#6C3C65] border-[#6C3C65] text-white hover:bg-[#6C3C65]/80'
   }
 ];
 
@@ -70,8 +73,8 @@ const HeroFilters = ({
                     className={`
                       flex-shrink-0 snap-start px-6 py-3 rounded-xl border-2 transition-all text-center min-w-[140px] relative
                       ${selectedEnergy.includes(energy.level)
-                        ? 'bg-primary text-primary-foreground border-primary scale-105 shadow-lg'
-                        : 'bg-card border-border hover:border-primary/50 hover:bg-accent'}
+                        ? `${energy.color} scale-105 shadow-lg`
+                        : `bg-card border-border hover:border-primary/50 hover:bg-accent`}
                     `}
                   >
                     <div className="font-semibold flex items-center justify-center gap-1">
