@@ -9,9 +9,10 @@ import { Clock } from "lucide-react";
 interface CalendarViewProps {
   events: Event[];
   onEventClick: (event: Event) => void;
+  onDismiss?: (eventId: string) => void;
 }
 
-const CalendarView = ({ events, onEventClick }: CalendarViewProps) => {
+const CalendarView = ({ events, onEventClick, onDismiss }: CalendarViewProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
@@ -76,6 +77,7 @@ const CalendarView = ({ events, onEventClick }: CalendarViewProps) => {
             <EventCard
               event={selectedEvent}
               onClick={() => onEventClick(selectedEvent)}
+              onDismiss={onDismiss}
             />
           </div>
         ) : (

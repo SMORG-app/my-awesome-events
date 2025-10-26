@@ -1,7 +1,9 @@
-import { Calendar, MapPin, Clock, Battery } from "lucide-react";
+import { Calendar, MapPin, Clock, Battery, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import ShareButton from "./ShareButton";
+import { useState } from "react";
 
 export interface Event {
   id: string;
@@ -20,9 +22,19 @@ export interface Event {
 interface EventCardProps {
   event: Event;
   onClick: () => void;
+  onDismiss?: (eventId: string) => void;
 }
 
-const EventCard = ({ event, onClick }: EventCardProps) => {
+const EventCard = ({ event, onClick, onDismiss }: EventCardProps) => {
+  const [isDismissing, setIsDismissing] = useState(false);
+
+  const handleDismiss = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsDismissing(true);
+    setTimeout(() => {
+      onDismiss?.(event.id);
+    }, 300);
+  };
   const eventDate = new Date(event.date);
   const formattedDate = eventDate.toLocaleDateString('en-US', { 
     month: 'short', 
@@ -36,9 +48,24 @@ const EventCard = ({ event, onClick }: EventCardProps) => {
 
   return (
     <Card 
-      className="overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group relative"
+      className={`
+        overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group relative
+        ${isDismissing ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}
+      `}
       onClick={onClick}
     >
+      {/* Dismiss Button */}
+      {onDismiss && (
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleDismiss}
+          className="absolute top-2 right-2 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+          title="Not interested"
+        >
+          <X className="w-4 h-4" />
+        </Button>
+      )}
       <div className="relative h-48 overflow-hidden">
         <img
           src={event.image_url || 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800'}

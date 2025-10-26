@@ -7,8 +7,12 @@ import ViewToggle from "@/components/ViewToggle";
 import CalendarView from "@/components/CalendarView";
 import { useLocation } from "@/hooks/useLocation";
 import { useEvents, Event } from "@/hooks/useEvents";
+import { useDismissedEvents } from "@/hooks/useDismissedEvents";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { Eye } from "lucide-react";
 
 type ViewType = "grid" | "calendar";
 
@@ -34,9 +38,14 @@ const Index = () => {
 
   const location = useLocation();
   const { events, loading } = useEvents(location, filters);
+  const { dismissedEvents, dismissEvent, undoDismiss, clearAllDismissed } = useDismissedEvents();
+  const { toast } = useToast();
 
-  // Filter by search query
+  // Filter by search query and dismissed events
   const filteredEvents = events.filter((event) => {
+    // Filter out dismissed events
+    if (dismissedEvents.includes(event.id)) return false;
+    
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
@@ -49,6 +58,24 @@ const Index = () => {
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);
     setIsModalOpen(true);
+  };
+
+  const handleDismissEvent = (eventId: string) => {
+    dismissEvent(eventId);
+    toast({
+      title: "Event hidden",
+      description: "This event won't be shown again",
+      action: (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => undoDismiss(eventId)}
+        >
+          Undo
+        </Button>
+      ),
+      duration: 5000,
+    });
   };
 
   const hasActiveFilters = 
@@ -97,6 +124,17 @@ const Index = () => {
                 ⚡ {filters.energyLevels.length + filters.vibes.length} active {filters.energyLevels.length + filters.vibes.length === 1 ? 'filter' : 'filters'}
               </Badge>
             )}
+            {dismissedEvents.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearAllDismissed}
+                className="text-sm gap-2"
+              >
+                <Eye className="w-4 h-4" />
+                Show {dismissedEvents.length} hidden
+              </Button>
+            )}
           </div>
           <div className="flex items-center gap-2">
             <ViewToggle view={view} onViewChange={setView} />
@@ -129,6 +167,7 @@ const Index = () => {
           <CalendarView
             events={filteredEvents}
             onEventClick={handleEventClick}
+            onDismiss={handleDismissEvent}
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
@@ -137,6 +176,7 @@ const Index = () => {
                 key={event.id}
                 event={event}
                 onClick={() => handleEventClick(event)}
+                onDismiss={handleDismissEvent}
               />
             ))}
           </div>
