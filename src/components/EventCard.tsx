@@ -1,16 +1,20 @@
-import { Calendar, MapPin, Clock } from "lucide-react";
+import { Calendar, MapPin, Clock, Battery } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ShareButton from "./ShareButton";
 
 export interface Event {
   id: string;
   title: string;
   date: string;
-  time: string;
-  location: string;
-  category: string;
-  image: string;
-  description: string;
+  venue_name: string | null;
+  city: string;
+  state: string;
+  cost_display: string;
+  image_url: string | null;
+  energy_level: number | null;
+  vibes: string[];
+  distance?: number;
 }
 
 interface EventCardProps {
@@ -19,37 +23,73 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event, onClick }: EventCardProps) => {
+  const eventDate = new Date(event.date);
+  const formattedDate = eventDate.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric',
+    year: 'numeric'
+  });
+  const formattedTime = eventDate.toLocaleTimeString('en-US', { 
+    hour: 'numeric', 
+    minute: '2-digit'
+  });
+
   return (
     <Card 
-      className="overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group"
+      className="overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group relative"
       onClick={onClick}
     >
       <div className="relative h-48 overflow-hidden">
         <img
-          src={event.image}
+          src={event.image_url || 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800'}
           alt={event.title}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
         />
-        <Badge className="absolute top-4 right-4 bg-primary/90 backdrop-blur-sm">
-          {event.category}
-        </Badge>
+        <ShareButton 
+          eventId={event.id} 
+          eventTitle={event.title}
+          eventDate={event.date}
+        />
+        <div className="absolute top-4 left-4 flex gap-2">
+          {event.energy_level && (
+            <Badge className="bg-primary/90 backdrop-blur-sm flex items-center gap-1">
+              <Battery className="w-3 h-3" />
+              Level {event.energy_level}
+            </Badge>
+          )}
+          <Badge className="bg-primary/90 backdrop-blur-sm">
+            {event.cost_display}
+          </Badge>
+        </div>
       </div>
       <CardContent className="p-6">
         <h3 className="text-xl font-semibold mb-3 line-clamp-2">{event.title}</h3>
         <div className="space-y-2 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4" />
-            <span>{event.date}</span>
+            <span>{formattedDate}</span>
           </div>
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4" />
-            <span>{event.time}</span>
+            <span>{formattedTime}</span>
           </div>
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4" />
-            <span className="line-clamp-1">{event.location}</span>
+            <span className="line-clamp-1">
+              {event.venue_name || `${event.city}, ${event.state}`}
+              {event.distance && ` • ${event.distance.toFixed(1)} mi`}
+            </span>
           </div>
         </div>
+        {event.vibes.length > 0 && (
+          <div className="mt-3 flex gap-1 flex-wrap">
+            {event.vibes.slice(0, 2).map(vibe => (
+              <Badge key={vibe} variant="outline" className="text-xs">
+                {vibe.replace(/-/g, ' ')}
+              </Badge>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
