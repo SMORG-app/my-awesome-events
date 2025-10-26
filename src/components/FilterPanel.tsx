@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import {
   Sheet,
   SheetContent,
@@ -50,6 +51,7 @@ const INTERESTS = [
 ];
 
 const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, onLocationChange }: FilterPanelProps) => {
+  const { toast } = useToast();
   const [minPrice, maxPrice] = availablePriceRange;
   const [locationInput, setLocationInput] = useState(`${location.city}, ${location.state}`);
   const [isEditingLocation, setIsEditingLocation] = useState(false);
@@ -71,6 +73,17 @@ const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, 
       energyLevels: [],
       vibes: []
     });
+    
+    // Reset location to default
+    onLocationChange('Seattle', 'WA');
+    setLocationInput('Seattle, WA');
+    setIsEditingLocation(false);
+    
+    // Show toast notification
+    toast({
+      description: "All filters cleared — showing full event list.",
+      duration: 3000,
+    });
   };
 
   const handleLocationSubmit = () => {
@@ -82,152 +95,175 @@ const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, 
   };
 
   const FilterContent = () => (
-    <div className="space-y-8 py-4">
-      {/* Location Filter */}
-      <div>
-        <h3 className="font-semibold mb-3" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
-          location
-        </h3>
-        <div className="flex gap-2">
-          <Input
-            placeholder="City, State"
-            value={locationInput}
-            onChange={(e) => {
-              setLocationInput(e.target.value);
-              setIsEditingLocation(true);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleLocationSubmit();
-              }
-            }}
-            onFocus={() => setIsEditingLocation(true)}
-            onBlur={() => {
-              // Don't reset on blur, only on successful submit
-            }}
-            style={{ fontFamily: 'Inter', fontSize: '14px' }}
-          />
-          <Button
-            size="sm"
-            onClick={handleLocationSubmit}
-            variant="outline"
-            onMouseDown={(e) => e.preventDefault()} // Prevent input blur when clicking button
-          >
-            Update
-          </Button>
-        </div>
-      </div>
-
-      {/* Distance Filter */}
-      <div>
-        <h3 className="font-semibold mb-3" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
-          distance from location: {filters.distance} miles
-        </h3>
-        <Slider
-          value={[filters.distance]}
-          onValueChange={([value]) => onFiltersChange({ ...filters, distance: value })}
-          min={1}
-          max={100}
-          step={1}
-          className="w-full"
-        />
-        <div className="flex justify-between text-xs mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '13px' }}>
-          <span>1 mi</span>
-          <span>100 mi</span>
-        </div>
-      </div>
-
-      {/* Price Range Filter */}
-      <div>
-        <div className="mb-3">
-          <h3 className="font-semibold" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
-            price range
+    <div className="flex flex-col h-full">
+      <div className="space-y-8 py-4 flex-1 overflow-y-auto pb-24">
+        {/* Location Filter */}
+        <div>
+          <h3 className="font-semibold mb-3" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
+            location
           </h3>
-          {minPrice === maxPrice && minPrice === 0 ? (
-            <p className="text-sm mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter' }}>
-              All events are free
-            </p>
-          ) : (
-            <p className="text-sm mt-1" style={{ color: '#6C3C65', fontFamily: 'Inter', fontWeight: 500 }}>
-              ${filters.priceRange[0]} – ${filters.priceRange[1]}
-            </p>
-          )}
-        </div>
-        {!(minPrice === maxPrice && minPrice === 0) && (
-          <>
-            <Slider
-              value={filters.priceRange}
-              onValueChange={(value) => onFiltersChange({ ...filters, priceRange: value as [number, number] })}
-              min={minPrice}
-              max={maxPrice}
-              step={5}
-              className="w-full"
-              disabled={minPrice === maxPrice}
+          <div className="flex gap-2">
+            <Input
+              placeholder="City, State"
+              value={locationInput}
+              onChange={(e) => {
+                setLocationInput(e.target.value);
+                setIsEditingLocation(true);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleLocationSubmit();
+                }
+              }}
+              onFocus={() => setIsEditingLocation(true)}
+              onBlur={() => {
+                // Don't reset on blur, only on successful submit
+              }}
+              style={{ fontFamily: 'Inter', fontSize: '14px' }}
             />
-            <div className="flex justify-between text-xs mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '13px' }}>
-              <span>${minPrice}</span>
-              <span>${maxPrice}</span>
-            </div>
-          </>
-        )}
-      </div>
+            <Button
+              size="sm"
+              onClick={handleLocationSubmit}
+              variant="outline"
+              onMouseDown={(e) => e.preventDefault()} // Prevent input blur when clicking button
+            >
+              Update
+            </Button>
+          </div>
+        </div>
 
-      {/* Interest Topics */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold">interests</h3>
-          {filters.interests.length > 0 && (
-            <span className="text-sm text-muted-foreground">
-              {filters.interests.length} selected
-            </span>
+        {/* Distance Filter */}
+        <div>
+          <h3 className="font-semibold mb-3" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
+            distance from location: {filters.distance} miles
+          </h3>
+          <Slider
+            value={[filters.distance]}
+            onValueChange={([value]) => onFiltersChange({ ...filters, distance: value })}
+            min={1}
+            max={100}
+            step={1}
+            className="w-full"
+          />
+          <div className="flex justify-between text-xs mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '13px' }}>
+            <span>1 mi</span>
+            <span>100 mi</span>
+          </div>
+        </div>
+
+        {/* Price Range Filter */}
+        <div>
+          <div className="mb-3">
+            <h3 className="font-semibold" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '15px' }}>
+              price range
+            </h3>
+            {minPrice === maxPrice && minPrice === 0 ? (
+              <p className="text-sm mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter' }}>
+                All events are free
+              </p>
+            ) : (
+              <p className="text-sm mt-1" style={{ color: '#6C3C65', fontFamily: 'Inter', fontWeight: 500 }}>
+                ${filters.priceRange[0]} – ${filters.priceRange[1]}
+              </p>
+            )}
+          </div>
+          {!(minPrice === maxPrice && minPrice === 0) && (
+            <>
+              <Slider
+                value={filters.priceRange}
+                onValueChange={(value) => onFiltersChange({ ...filters, priceRange: value as [number, number] })}
+                min={minPrice}
+                max={maxPrice}
+                step={5}
+                className="w-full"
+                disabled={minPrice === maxPrice}
+              />
+              <div className="flex justify-between text-xs mt-1" style={{ color: '#2A2A2A', fontFamily: 'Inter', fontWeight: 500, fontSize: '13px' }}>
+                <span>${minPrice}</span>
+                <span>${maxPrice}</span>
+              </div>
+            </>
           )}
         </div>
-        <div className="flex gap-3 flex-wrap max-h-[300px] overflow-y-auto">
-          {INTERESTS.map(interest => {
-            const isSelected = filters.interests.includes(interest.id);
-            const hasAnySelection = filters.interests.length > 0;
-            
-            return (
-              <button
-                key={interest.id}
-                onClick={() => toggleInterest(interest.id)}
-                style={{
-                  backgroundColor: isSelected ? '#6C3C65' : '#E8E2D8',
-                  color: isSelected ? '#FCFBF9' : '#2A2A2A',
-                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
-                  opacity: hasAnySelection && !isSelected ? 0.7 : 1
-                }}
-                className="cursor-pointer px-3 py-1.5 rounded-full font-medium text-[15px] transition-all duration-200 ease-in-out hover:scale-105 whitespace-nowrap"
-                onMouseEnter={(e) => {
-                  if (!isSelected) {
-                    e.currentTarget.style.backgroundColor = '#F4B6A0';
-                    e.currentTarget.style.color = '#FCFBF9';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isSelected) {
-                    e.currentTarget.style.backgroundColor = '#E8E2D8';
-                    e.currentTarget.style.color = '#2A2A2A';
-                  }
-                }}
-              >
-                {interest.label}
-              </button>
-            );
-          })}
+
+        {/* Interest Topics */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-semibold">interests</h3>
+            {filters.interests.length > 0 && (
+              <span className="text-sm text-muted-foreground">
+                {filters.interests.length} selected
+              </span>
+            )}
+          </div>
+          <div className="flex gap-3 flex-wrap max-h-[300px] overflow-y-auto">
+            {INTERESTS.map(interest => {
+              const isSelected = filters.interests.includes(interest.id);
+              const hasAnySelection = filters.interests.length > 0;
+              
+              return (
+                <button
+                  key={interest.id}
+                  onClick={() => toggleInterest(interest.id)}
+                  style={{
+                    backgroundColor: isSelected ? '#6C3C65' : '#E8E2D8',
+                    color: isSelected ? '#FCFBF9' : '#2A2A2A',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                    opacity: hasAnySelection && !isSelected ? 0.7 : 1
+                  }}
+                  className="cursor-pointer px-3 py-1.5 rounded-full font-medium text-[15px] transition-all duration-200 ease-in-out hover:scale-105 whitespace-nowrap"
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.backgroundColor = '#F4B6A0';
+                      e.currentTarget.style.color = '#FCFBF9';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.backgroundColor = '#E8E2D8';
+                      e.currentTarget.style.color = '#2A2A2A';
+                    }
+                  }}
+                >
+                  {interest.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {hasActiveFilters && (
-        <Button
-          variant="outline"
+      {/* Fixed Clear All Button */}
+      <div className="absolute bottom-0 left-0 right-0 p-6 bg-background border-t">
+        <button
           onClick={clearAllFilters}
-          className="w-full"
+          aria-label="Clear all selected filters"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              clearAllFilters();
+            }
+          }}
+          style={{
+            fontFamily: 'Inter',
+            fontWeight: 500,
+            fontSize: '15px',
+            color: '#6C3C65',
+            backgroundColor: 'transparent',
+            border: '1px solid #6C3C65',
+            padding: '8px 20px',
+            borderRadius: '9999px',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+            transition: 'all 0.2s ease-in-out',
+            cursor: 'pointer',
+            width: '100%',
+            textAlign: 'center'
+          }}
+          className="hover:bg-[#6C3C65] hover:text-[#FCFBF9]"
         >
-          <X className="w-4 h-4 mr-2" />
-          Clear All Filters
-        </Button>
-      )}
+          clear all filters
+        </button>
+      </div>
     </div>
   );
 
@@ -243,8 +279,8 @@ const FilterPanel = ({ filters, onFiltersChange, availablePriceRange, location, 
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto">
-        <SheetHeader>
+      <SheetContent className="flex flex-col h-full overflow-hidden">
+        <SheetHeader className="flex-shrink-0">
           <SheetTitle>Filter Events</SheetTitle>
         </SheetHeader>
         <FilterContent />
