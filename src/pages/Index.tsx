@@ -90,6 +90,7 @@ const Index = () => {
         onSearch={setSearchQuery}
         selectedEnergy={filters.energyLevels}
         selectedVibes={filters.vibes}
+        selectedInterests={filters.interests}
         onEnergyChange={(levels) => {
           // Check if all levels in the group are selected
           const allSelected = levels.every(level => filters.energyLevels.includes(level));
@@ -110,8 +111,14 @@ const Index = () => {
             : [...filters.vibes, vibeId];
           setFilters({ ...filters, vibes: newVibes });
         }}
+        onInterestChange={(interestId) => {
+          const newInterests = filters.interests.includes(interestId)
+            ? filters.interests.filter(i => i !== interestId)
+            : [...filters.interests, interestId];
+          setFilters({ ...filters, interests: newInterests });
+        }}
         onClearEnergyVibe={() => {
-          setFilters({ ...filters, energyLevels: [], vibes: [] });
+          setFilters({ ...filters, energyLevels: [], vibes: [], interests: [] });
         }}
       />
       
@@ -127,9 +134,9 @@ const Index = () => {
             <Badge variant="secondary" className="text-sm">
               {filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''} found
             </Badge>
-            {(filters.energyLevels.length > 0 || filters.vibes.length > 0) && (
+            {(filters.energyLevels.length > 0 || filters.vibes.length > 0 || filters.interests.length > 0) && (
               <Badge variant="default" className="text-sm">
-                ⚡ {filters.energyLevels.length + filters.vibes.length} active {filters.energyLevels.length + filters.vibes.length === 1 ? 'filter' : 'filters'}
+                ⚡ {filters.energyLevels.length + filters.vibes.length + filters.interests.length} active {filters.energyLevels.length + filters.vibes.length + filters.interests.length === 1 ? 'filter' : 'filters'}
               </Badge>
             )}
             {dismissedEvents.length > 0 && (

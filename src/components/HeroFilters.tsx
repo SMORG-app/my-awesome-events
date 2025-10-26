@@ -6,8 +6,10 @@ import { X, Zap, Info } from "lucide-react";
 interface HeroFiltersProps {
   selectedEnergy: number[];
   selectedVibes: string[];
+  selectedInterests: string[];
   onEnergyChange: (levels: number[]) => void;
   onVibeChange: (vibeId: string) => void;
+  onInterestChange: (interestId: string) => void;
   onClearAll: () => void;
 }
 
@@ -64,14 +66,32 @@ const VIBES = [
   { id: 'work', label: 'work' }
 ];
 
+const INTERESTS = [
+  { id: 'networking', label: 'networking' },
+  { id: 'chill', label: 'chill' },
+  { id: 'party', label: 'party' },
+  { id: 'intellectual', label: 'intellectual' },
+  { id: 'wellness', label: 'wellness' },
+  { id: 'dog-friendly', label: 'dog-friendly' },
+  { id: 'spiritual', label: 'spiritual' },
+  { id: 'mindful', label: 'mindful' },
+  { id: 'active', label: 'active' },
+  { id: 'cultural', label: 'cultural' },
+  { id: 'outdoor', label: 'outdoor' },
+  { id: 'creative', label: 'creative' },
+  { id: 'crafting', label: 'crafting' }
+];
+
 const HeroFilters = ({ 
   selectedEnergy, 
-  selectedVibes, 
+  selectedVibes,
+  selectedInterests,
   onEnergyChange, 
   onVibeChange,
+  onInterestChange,
   onClearAll 
 }: HeroFiltersProps) => {
-  const hasSelections = selectedEnergy.length > 0 || selectedVibes.length > 0;
+  const hasSelections = selectedEnergy.length > 0 || selectedVibes.length > 0 || selectedInterests.length > 0;
 
   return (
     <div className="space-y-4">
@@ -153,6 +173,47 @@ const HeroFilters = ({
                 }}
               >
                 {vibe.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Interest Section */}
+      <div>
+        <h2 className="text-lg font-semibold mb-3">
+          what are your interests?
+        </h2>
+        <div className="flex flex-wrap gap-3">
+          {INTERESTS.map(interest => {
+            const isSelected = selectedInterests.includes(interest.id);
+            const hasAnySelection = selectedInterests.length > 0;
+            
+            return (
+              <button
+                key={interest.id}
+                onClick={() => onInterestChange(interest.id)}
+                style={{
+                  backgroundColor: isSelected ? '#6C3C65' : '#E8E2D8',
+                  color: isSelected ? '#FCFBF9' : '#2A2A2A',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                  opacity: hasAnySelection && !isSelected ? 0.7 : 1
+                }}
+                className="cursor-pointer px-3 py-1.5 rounded-full font-medium text-[15px] transition-all duration-200 ease-in-out hover:scale-105 whitespace-nowrap"
+                onMouseEnter={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = '#F4B6A0';
+                    e.currentTarget.style.color = '#FCFBF9';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = '#E8E2D8';
+                    e.currentTarget.style.color = '#2A2A2A';
+                  }
+                }}
+              >
+                {interest.label}
               </button>
             );
           })}

@@ -6,17 +6,21 @@ interface HeroProps {
   onSearch: (query: string) => void;
   selectedEnergy: number[];
   selectedVibes: string[];
+  selectedInterests: string[];
   onEnergyChange: (levels: number[]) => void;
   onVibeChange: (vibeId: string) => void;
+  onInterestChange: (interestId: string) => void;
   onClearEnergyVibe: () => void;
 }
 
 const Hero = ({ 
   onSearch, 
   selectedEnergy, 
-  selectedVibes, 
+  selectedVibes,
+  selectedInterests,
   onEnergyChange, 
   onVibeChange,
+  onInterestChange,
   onClearEnergyVibe 
 }: HeroProps) => {
   // Determine O color based on energy commitment
@@ -93,8 +97,10 @@ const Hero = ({
         <HeroFilters
           selectedEnergy={selectedEnergy}
           selectedVibes={selectedVibes}
+          selectedInterests={selectedInterests}
           onEnergyChange={onEnergyChange}
           onVibeChange={onVibeChange}
+          onInterestChange={onInterestChange}
           onClearAll={onClearEnergyVibe}
         />
       </div>
