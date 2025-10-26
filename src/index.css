@@ -8,33 +8,33 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 40 30% 98.5%; /* #FCFBF9 Porcelain White */
-    --foreground: 0 0% 16%; /* Charcoal Ink */
+    --background: 40 30% 98.2%; /* #FCFBF9 Porcelain White */
+    --foreground: 0 0% 16.5%; /* #2A2A2A Charcoal Ink */
 
-    --card: 40 25% 87%; /* Oat Beige */
-    --card-foreground: 0 0% 16%; /* Charcoal Ink */
+    --card: 38 27% 88%; /* #E8E2D8 Oat Beige */
+    --card-foreground: 0 0% 16.5%; /* #2A2A2A Charcoal Ink */
 
-    --popover: 40 25% 87%; /* Oat Beige */
-    --popover-foreground: 0 0% 16%; /* Charcoal Ink */
+    --popover: 38 27% 88%; /* #E8E2D8 Oat Beige */
+    --popover-foreground: 0 0% 16.5%; /* #2A2A2A Charcoal Ink */
 
     --primary: 262 83% 58%;
-    --primary-foreground: 40 30% 98%; /* Porcelain White */
+    --primary-foreground: 40 30% 98.2%; /* #FCFBF9 Porcelain White */
     --primary-glow: 262 83% 68%;
 
-    --secondary: 40 25% 87%; /* Oat Beige */
-    --secondary-foreground: 0 0% 16%; /* Charcoal Ink */
+    --secondary: 38 27% 88%; /* #E8E2D8 Oat Beige */
+    --secondary-foreground: 0 0% 16.5%; /* #2A2A2A Charcoal Ink */
 
-    --muted: 40 25% 87%; /* Oat Beige */
-    --muted-foreground: 40 8% 67%; /* Mushroom Grey */
+    --muted: 38 27% 88%; /* #E8E2D8 Oat Beige */
+    --muted-foreground: 42 8% 68%; /* #B2AFA8 Mushroom Grey */
 
-    --accent: 40 25% 87%; /* Oat Beige */
-    --accent-foreground: 0 0% 16%; /* Charcoal Ink */
+    --accent: 38 27% 88%; /* #E8E2D8 Oat Beige */
+    --accent-foreground: 0 0% 16.5%; /* #2A2A2A Charcoal Ink */
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 40 30% 98%;
+    --destructive-foreground: 40 30% 98.2%;
 
-    --border: 40 8% 67%; /* Mushroom Grey */
-    --input: 40 8% 67%; /* Mushroom Grey */
+    --border: 42 8% 68%; /* #B2AFA8 Mushroom Grey */
+    --input: 42 8% 68%; /* #B2AFA8 Mushroom Grey */
     --ring: 262 83% 58%;
 
     --radius: 0.75rem;
