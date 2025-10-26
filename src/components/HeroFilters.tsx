@@ -98,18 +98,18 @@ const HeroFilters = ({
                     <button
                       onClick={() => onEnergyChange(commitment.levels)}
                       className={`
-                        flex-shrink-0 snap-start px-6 py-4 rounded-xl border-2 transition-all min-w-[160px]
+                        flex-shrink-0 snap-start px-4 py-3 rounded-xl border-2 transition-all min-w-[140px]
                         ${isSelected
                           ? `${commitment.selectedBg} ${commitment.selectedText} ${commitment.selectedBorder} scale-105 shadow-lg` 
                           : `${commitment.bgColor} ${commitment.textColor} ${commitment.borderColor} ${commitment.hoverBg} opacity-90 hover:opacity-100`}
                       `}
                     >
-                      <div className="flex gap-0.5 mb-2 justify-center">
+                      <div className="flex gap-0.5 mb-1 justify-center">
                         {[...Array(commitment.iconCount)].map((_, i) => (
                           <Zap key={i} className="w-3.5 h-3.5" fill="currentColor" />
                         ))}
                       </div>
-                      <div className="font-semibold text-lg flex items-center justify-center gap-1">
+                      <div className="font-semibold text-base flex items-center justify-center gap-1">
                         {commitment.label}
                         <Info className="w-3 h-3 opacity-50" />
                       </div>
