@@ -237,6 +237,18 @@ const Index = () => {
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+
+      {/* Footer Section */}
+      <footer className="border-t border-border mt-16 py-12 bg-card/30">
+        <div className="container mx-auto px-4 max-w-3xl text-center">
+          <h2 className="text-2xl font-canela lowercase mb-6 text-foreground">
+            About Smorg
+          </h2>
+          <p className="text-base font-inter text-foreground/80 leading-relaxed">
+            Smorg is a local discovery platform that helps you find experiences that match your vibe and energy level. Whether you want something calm, creative, or high energy, Smorg curates events that fit how you actually feel, not just what's trending.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
