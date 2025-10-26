@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Hero from "@/components/Hero";
 import EventCard from "@/components/EventCard";
 import EventModal from "@/components/EventModal";
 import FilterPanel, { EventFilters } from "@/components/FilterPanel";
+import ViewToggle from "@/components/ViewToggle";
+import CalendarView from "@/components/CalendarView";
 import { useLocation } from "@/hooks/useLocation";
 import { useEvents, Event } from "@/hooks/useEvents";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
+type ViewType = "grid" | "calendar";
+
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [view, setView] = useState<ViewType>(() => {
+    const saved = localStorage.getItem("vibeScoutView");
+    return (saved as ViewType) || "grid";
+  });
   const [filters, setFilters] = useState<EventFilters>({
     distance: 25,
     maxPrice: null,
@@ -19,6 +27,10 @@ const Index = () => {
     energyLevels: [],
     vibes: []
   });
+
+  useEffect(() => {
+    localStorage.setItem("vibeScoutView", view);
+  }, [view]);
 
   const location = useLocation();
   const { events, loading } = useEvents(location, filters);
@@ -50,7 +62,7 @@ const Index = () => {
       <Hero onSearch={setSearchQuery} />
       
       <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
             <h2 className="text-2xl font-bold">
               {hasActiveFilters ? 'My Events' : 'Events Near You'}
@@ -63,7 +75,10 @@ const Index = () => {
               </Badge>
             )}
           </div>
-          <FilterPanel filters={filters} onFiltersChange={setFilters} />
+          <div className="flex items-center gap-3">
+            <ViewToggle view={view} onViewChange={setView} />
+            <FilterPanel filters={filters} onFiltersChange={setFilters} />
+          </div>
         </div>
 
         {hasActiveFilters && (
@@ -93,6 +108,11 @@ const Index = () => {
               </p>
             )}
           </div>
+        ) : view === "calendar" ? (
+          <CalendarView
+            events={filteredEvents}
+            onEventClick={handleEventClick}
+          />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
             {filteredEvents.map((event) => (
