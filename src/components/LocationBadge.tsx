@@ -119,12 +119,17 @@ const LocationBadge = ({
         <PopoverContent 
           className="w-80" 
           align="start"
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+            setTimeout(() => {
+              const el = document.getElementById('location-input') as HTMLInputElement | null;
+              el?.focus();
+              el?.select();
+            }, 0);
+          }}
           onInteractOutside={(e) => {
-            // Only close if clicking outside, not on the trigger
-            const target = e.target as HTMLElement;
-            if (target.closest('[role="button"]')) {
-              e.preventDefault();
-            }
+            // Keep popover open while editing; user can close via X or clicking badge again
+            e.preventDefault();
           }}
         >
           <div className="space-y-4" onClick={(e) => e.stopPropagation()}>
