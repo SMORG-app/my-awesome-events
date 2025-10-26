@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Clock, X } from "lucide-react";
+import { Calendar, MapPin, Clock, X, Ticket } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -36,6 +36,32 @@ const EventCard = ({ event, onClick, onDismiss }: EventCardProps) => {
       onDismiss?.(event.id);
     }, 300);
   };
+
+  // Determine price tag styling based on energy level
+  const getPriceTagStyle = () => {
+    const energyLevel = event.energy_level || 3;
+    
+    if (energyLevel <= 2) {
+      // Effortless - Sage Mist
+      return {
+        backgroundColor: '#CDE2D0',
+        color: '#2A2A2A'
+      };
+    } else if (energyLevel <= 4) {
+      // A Little Prep - Coral Peach
+      return {
+        backgroundColor: '#F4B6A0',
+        color: '#2A2A2A'
+      };
+    } else {
+      // All-In - Plum Wine
+      return {
+        backgroundColor: '#6C3C65',
+        color: '#FCFBF9'
+      };
+    }
+  };
+
   const eventDate = new Date(event.date);
   const formattedDate = eventDate.toLocaleDateString('en-US', { 
     month: 'short', 
@@ -79,9 +105,16 @@ const EventCard = ({ event, onClick, onDismiss }: EventCardProps) => {
           eventDate={event.date}
         />
         <div className="absolute top-4 left-4">
-          <Badge className="bg-primary/90 backdrop-blur-sm">
-            {event.cost_display}
-          </Badge>
+          <div 
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-inter font-medium text-sm"
+            style={{
+              ...getPriceTagStyle(),
+              boxShadow: '0 1px 4px rgba(0,0,0,0.08)'
+            }}
+          >
+            <Ticket className="w-3.5 h-3.5" />
+            <span>{event.cost_display}</span>
+          </div>
         </div>
       </div>
       <CardContent className="p-6">
