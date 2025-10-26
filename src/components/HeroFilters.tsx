@@ -30,14 +30,18 @@ const ENERGY_LEVELS = [
 ];
 
 const VIBES = [
-  { id: 'date-night', emoji: '💕', label: 'Date Night' },
-  { id: 'family-kids', emoji: '👨‍👩‍👧‍👦', label: 'Family Time' },
-  { id: 'friends-night', emoji: '🎉', label: 'Friends Night' },
-  { id: 'solo-adventure', emoji: '👤', label: 'Solo Adventure' },
-  { id: 'learning-new', emoji: '🎓', label: 'Learn & Grow' },
-  { id: 'relaxing-wellness', emoji: '🧘', label: 'Wellness' },
-  { id: 'seasonal-holiday', emoji: '🎄', label: 'Seasonal' },
-  { id: 'creative-artsy', emoji: '🎨', label: 'Creative' }
+  { id: 'family-friendly', label: 'Family-Friendly' },
+  { id: 'date-night', label: 'Date Night' },
+  { id: 'solo-time', label: 'Solo Time' },
+  { id: 'friends-outing', label: 'Friends Outing' },
+  { id: 'work-networking', label: 'Work / Networking' },
+  { id: 'chill-low-key', label: 'Chill / Low-Key' },
+  { id: 'high-energy-party', label: 'High Energy / Party' },
+  { id: 'thoughtful-intellectual', label: 'Thoughtful / Intellectual' },
+  { id: 'rejuvenating-wellness', label: 'Rejuvenating / Wellness' },
+  { id: 'intimate-niche', label: 'Intimate / Niche' },
+  { id: 'dog-friendly', label: 'Dog-Friendly' },
+  { id: 'spiritual-mindful', label: 'Spiritual / Mindful' }
 ];
 
 const HeroFilters = ({ 
@@ -100,7 +104,6 @@ const HeroFilters = ({
               className="cursor-pointer flex-shrink-0 snap-start px-4 py-2 text-base transition-all hover:scale-105"
               onClick={() => onVibeChange(vibe.id)}
             >
-              <span className="mr-2">{vibe.emoji}</span>
               <span className="whitespace-nowrap">{vibe.label}</span>
             </Badge>
           ))}
