@@ -54,11 +54,10 @@ const HeroFilters = ({
   const hasSelections = selectedEnergy.length > 0 || selectedVibes.length > 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Energy Commitment Section */}
       <div>
-        <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-          <span>⚡</span>
+        <h2 className="text-lg font-semibold mb-3">
           How much energy do you have today?
         </h2>
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
@@ -92,8 +91,7 @@ const HeroFilters = ({
 
       {/* Vibe Section */}
       <div>
-        <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-          <span>✨</span>
+        <h2 className="text-lg font-semibold mb-3">
           What's your vibe?
         </h2>
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
