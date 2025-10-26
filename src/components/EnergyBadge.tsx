@@ -1,3 +1,5 @@
+import { Zap } from "lucide-react";
+
 interface EnergyBadgeProps {
   energyLevel: number | null;
 }
@@ -8,7 +10,7 @@ const EnergyBadge = ({ energyLevel }: EnergyBadgeProps) => {
   const getEnergyDisplay = (level: number) => {
     if (level <= 2) {
       return {
-        icon: '☀️',
+        iconCount: 1,
         label: 'effortless',
         bgColor: 'bg-mint-100',
         textColor: 'text-mint-700',
@@ -16,7 +18,7 @@ const EnergyBadge = ({ energyLevel }: EnergyBadgeProps) => {
       };
     } else if (level <= 4) {
       return {
-        icon: '☀️☀️',
+        iconCount: 2,
         label: 'a little prep',
         bgColor: 'bg-salmon-100',
         textColor: 'text-salmon-700',
@@ -24,7 +26,7 @@ const EnergyBadge = ({ energyLevel }: EnergyBadgeProps) => {
       };
     } else {
       return {
-        icon: '☀️☀️☀️',
+        iconCount: 3,
         label: 'all-in',
         bgColor: 'bg-mauve-100',
         textColor: 'text-mauve-700',
@@ -41,7 +43,11 @@ const EnergyBadge = ({ energyLevel }: EnergyBadgeProps) => {
       ${display.bgColor} ${display.textColor} border ${display.borderColor}
       text-sm font-medium
     `}>
-      <span className="text-base">{display.icon}</span>
+      <div className="flex gap-0.5">
+        {[...Array(display.iconCount)].map((_, i) => (
+          <Zap key={i} className="w-3.5 h-3.5" fill="currentColor" />
+        ))}
+      </div>
       <span>{display.label}</span>
     </div>
   );
