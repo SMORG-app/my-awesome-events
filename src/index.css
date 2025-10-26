@@ -107,7 +107,20 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-canela lowercase;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+
+  button {
+    @apply font-inter lowercase;
+    font-weight: 500;
   }
 
   .scrollbar-hide {

@@ -25,7 +25,7 @@ const Hero = ({
         {/* Header */}
         <div className="text-center mb-6">
           <div className="mb-6">
-            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent uppercase">
               SMORG
             </h1>
           </div>
