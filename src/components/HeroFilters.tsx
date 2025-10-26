@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { X } from "lucide-react";
 
 interface HeroFiltersProps {
@@ -11,9 +12,21 @@ interface HeroFiltersProps {
 }
 
 const ENERGY_LEVELS = [
-  { level: 1, label: 'Effortless' },
-  { level: 2, label: 'A Little Prep' },
-  { level: 3, label: 'All-In' }
+  { 
+    level: 1, 
+    label: 'Effortless',
+    tooltip: 'Minimal planning, low cost, nearby, easy to bail or attend spontaneously.'
+  },
+  { 
+    level: 2, 
+    label: 'A Little Prep',
+    tooltip: 'Requires light planning — tickets, transport, maybe a friend or outfit change.'
+  },
+  { 
+    level: 3, 
+    label: 'All-In',
+    tooltip: 'More planning, cost, or social energy; multi-hour, dress-up, travel or parking involved.'
+  }
 ];
 
 const VIBES = [
@@ -45,20 +58,28 @@ const HeroFilters = ({
           How much energy do you have today?
         </h2>
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
-          {ENERGY_LEVELS.map(energy => (
-            <button
-              key={energy.level}
-              onClick={() => onEnergyChange(energy.level)}
-              className={`
-                flex-shrink-0 snap-start px-6 py-3 rounded-xl border-2 transition-all text-center min-w-[140px]
-                ${selectedEnergy.includes(energy.level)
-                  ? 'bg-primary text-primary-foreground border-primary scale-105 shadow-lg'
-                  : 'bg-card border-border hover:border-primary/50 hover:bg-accent'}
-              `}
-            >
-              <div className="font-semibold">{energy.label}</div>
-            </button>
-          ))}
+          <TooltipProvider>
+            {ENERGY_LEVELS.map(energy => (
+              <Tooltip key={energy.level}>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => onEnergyChange(energy.level)}
+                    className={`
+                      flex-shrink-0 snap-start px-6 py-3 rounded-xl border-2 transition-all text-center min-w-[140px]
+                      ${selectedEnergy.includes(energy.level)
+                        ? 'bg-primary text-primary-foreground border-primary scale-105 shadow-lg'
+                        : 'bg-card border-border hover:border-primary/50 hover:bg-accent'}
+                    `}
+                  >
+                    <div className="font-semibold">{energy.label}</div>
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>{energy.tooltip}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </TooltipProvider>
         </div>
       </div>
 
