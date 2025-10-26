@@ -53,6 +53,25 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Energy Commitment Colors */
+    --mint-50: 138 50% 96%;
+    --mint-100: 138 48% 91%;
+    --mint-300: 138 45% 75%;
+    --mint-500: 138 40% 74%; /* #CDE2D0 Sage Mist */
+    --mint-700: 138 45% 45%;
+
+    --salmon-50: 14 80% 96%;
+    --salmon-100: 14 75% 90%;
+    --salmon-300: 14 70% 78%;
+    --salmon-500: 14 82% 80%; /* #F4B6A0 Coral Peach */
+    --salmon-700: 14 60% 50%;
+
+    --mauve-50: 310 40% 96%;
+    --mauve-100: 310 35% 90%;
+    --mauve-300: 310 30% 70%;
+    --mauve-500: 310 23% 41%; /* #6C3C65 Plum Wine */
+    --mauve-700: 310 30% 30%;
   }
 
   .dark {
@@ -98,6 +117,25 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Energy Commitment Colors - Dark Mode */
+    --mint-50: 138 45% 15%;
+    --mint-100: 138 40% 20%;
+    --mint-300: 138 35% 40%;
+    --mint-500: 138 40% 60%;
+    --mint-700: 138 45% 75%;
+
+    --salmon-50: 14 60% 15%;
+    --salmon-100: 14 65% 25%;
+    --salmon-300: 14 70% 50%;
+    --salmon-500: 14 75% 70%;
+    --salmon-700: 14 80% 85%;
+
+    --mauve-50: 310 30% 15%;
+    --mauve-100: 310 25% 25%;
+    --mauve-300: 310 25% 45%;
+    --mauve-500: 310 30% 60%;
+    --mauve-700: 310 35% 75%;
   }
 }
 

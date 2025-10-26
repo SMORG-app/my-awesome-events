@@ -61,6 +61,27 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        mint: {
+          50: "hsl(var(--mint-50))",
+          100: "hsl(var(--mint-100))",
+          300: "hsl(var(--mint-300))",
+          500: "hsl(var(--mint-500))",
+          700: "hsl(var(--mint-700))",
+        },
+        salmon: {
+          50: "hsl(var(--salmon-50))",
+          100: "hsl(var(--salmon-100))",
+          300: "hsl(var(--salmon-300))",
+          500: "hsl(var(--salmon-500))",
+          700: "hsl(var(--salmon-700))",
+        },
+        mauve: {
+          50: "hsl(var(--mauve-50))",
+          100: "hsl(var(--mauve-100))",
+          300: "hsl(var(--mauve-300))",
+          500: "hsl(var(--mauve-500))",
+          700: "hsl(var(--mauve-700))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -6,29 +6,56 @@ import { X, Info } from "lucide-react";
 interface HeroFiltersProps {
   selectedEnergy: number[];
   selectedVibes: string[];
-  onEnergyChange: (level: number) => void;
+  onEnergyChange: (levels: number[]) => void;
   onVibeChange: (vibeId: string) => void;
   onClearAll: () => void;
 }
 
-const ENERGY_LEVELS = [
-  { 
-    level: 1, 
-    label: 'Effortless',
+const ENERGY_COMMITMENTS = [
+  {
+    id: 'effortless',
+    levels: [1, 2],
+    icon: '☀️',
+    label: 'effortless',
+    description: 'minimal effort, just show up',
     tooltip: 'Minimal planning, low cost, nearby, easy to bail or attend spontaneously.',
-    color: 'bg-[#CDE2D0] border-[#CDE2D0] hover:bg-[#CDE2D0]/80'
+    bgColor: 'bg-mint-500',
+    borderColor: 'border-mint-500',
+    textColor: 'text-mint-700',
+    hoverBg: 'hover:bg-mint-500/80',
+    selectedBg: 'bg-mint-500',
+    selectedText: 'text-white',
+    selectedBorder: 'border-mint-700'
   },
-  { 
-    level: 2, 
-    label: 'A Little Prep',
+  {
+    id: 'little-prep',
+    levels: [3, 4],
+    icon: '☀️☀️',
+    label: 'a little prep',
+    description: 'some planning, moderate energy',
     tooltip: 'Requires light planning — tickets, transport, maybe a friend or outfit change.',
-    color: 'bg-[#F4B6A0] border-[#F4B6A0] hover:bg-[#F4B6A0]/80'
+    bgColor: 'bg-salmon-500',
+    borderColor: 'border-salmon-500',
+    textColor: 'text-salmon-700',
+    hoverBg: 'hover:bg-salmon-500/80',
+    selectedBg: 'bg-salmon-500',
+    selectedText: 'text-white',
+    selectedBorder: 'border-salmon-700'
   },
-  { 
-    level: 3, 
-    label: 'All-In',
+  {
+    id: 'all-in',
+    levels: [5, 6],
+    icon: '☀️☀️☀️',
+    label: 'all-in',
+    description: 'full commitment, high energy',
     tooltip: 'More planning, cost, or social energy; multi-hour, dress-up, travel or parking involved.',
-    color: 'bg-[#6C3C65] border-[#6C3C65] text-white hover:bg-[#6C3C65]/80'
+    bgColor: 'bg-mauve-500',
+    borderColor: 'border-mauve-500',
+    textColor: 'text-white',
+    hoverBg: 'hover:bg-mauve-500/80',
+    selectedBg: 'bg-mauve-500',
+    selectedText: 'text-white',
+    selectedBorder: 'border-mauve-700'
   }
 ];
 
@@ -60,35 +87,41 @@ const HeroFilters = ({
     <div className="space-y-4">
       {/* Energy Commitment Section */}
       <div>
-        <h2 className="text-lg font-semibold mb-3">
-          How much energy do you have today?
+        <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+          <span>☀️</span>
+          What energy commitment do you want to make?
         </h2>
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
           <TooltipProvider>
-            {ENERGY_LEVELS.map(energy => (
-              <Tooltip key={energy.level}>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => onEnergyChange(energy.level)}
-                    className={`
-                      flex-shrink-0 snap-start px-6 py-3 rounded-xl border-2 transition-all text-center min-w-[140px] relative
-                      ${energy.color}
-                      ${selectedEnergy.includes(energy.level)
-                        ? 'scale-105 shadow-lg ring-2 ring-offset-2 ring-foreground'
-                        : 'opacity-80 hover:opacity-100'}
-                    `}
-                  >
-                    <div className="font-semibold flex items-center justify-center gap-1">
-                      {energy.label}
-                      <Info className="w-3 h-3 opacity-50" />
-                    </div>
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-xs">
-                  <p>{energy.tooltip}</p>
-                </TooltipContent>
-              </Tooltip>
-            ))}
+            {ENERGY_COMMITMENTS.map(commitment => {
+              const isSelected = commitment.levels.some(level => selectedEnergy.includes(level));
+              
+              return (
+                <Tooltip key={commitment.id}>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => onEnergyChange(commitment.levels)}
+                      className={`
+                        flex-shrink-0 snap-start px-6 py-4 rounded-xl border-2 transition-all min-w-[160px]
+                        ${isSelected
+                          ? `${commitment.selectedBg} ${commitment.selectedText} ${commitment.selectedBorder} scale-105 shadow-lg` 
+                          : `${commitment.bgColor} ${commitment.textColor} ${commitment.borderColor} ${commitment.hoverBg} opacity-90 hover:opacity-100`}
+                      `}
+                    >
+                      <div className="text-2xl mb-1">{commitment.icon}</div>
+                      <div className="font-semibold text-lg flex items-center justify-center gap-1">
+                        {commitment.label}
+                        <Info className="w-3 h-3 opacity-50" />
+                      </div>
+                      <div className="text-xs opacity-90 mt-1">{commitment.description}</div>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>{commitment.tooltip}</p>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
           </TooltipProvider>
         </div>
       </div>

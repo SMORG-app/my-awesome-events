@@ -1,8 +1,9 @@
-import { Calendar, MapPin, Clock, Battery, X } from "lucide-react";
+import { Calendar, MapPin, Clock, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ShareButton from "./ShareButton";
+import EnergyBadge from "./EnergyBadge";
 import { useState } from "react";
 
 export interface Event {
@@ -77,13 +78,7 @@ const EventCard = ({ event, onClick, onDismiss }: EventCardProps) => {
           eventTitle={event.title}
           eventDate={event.date}
         />
-        <div className="absolute top-4 left-4 flex gap-2">
-          {event.energy_level && (
-            <Badge className="bg-primary/90 backdrop-blur-sm flex items-center gap-1">
-              <Battery className="w-3 h-3" />
-              Level {event.energy_level}
-            </Badge>
-          )}
+        <div className="absolute top-4 left-4">
           <Badge className="bg-primary/90 backdrop-blur-sm">
             {event.cost_display}
           </Badge>
@@ -91,6 +86,12 @@ const EventCard = ({ event, onClick, onDismiss }: EventCardProps) => {
       </div>
       <CardContent className="p-6">
         <h3 className="text-xl font-semibold mb-3 line-clamp-2">{event.title}</h3>
+        
+        {/* Energy Badge */}
+        <div className="mb-3">
+          <EnergyBadge energyLevel={event.energy_level} />
+        </div>
+
         <div className="space-y-2 text-sm text-foreground">
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4" />

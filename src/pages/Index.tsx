@@ -90,10 +90,18 @@ const Index = () => {
         onSearch={setSearchQuery}
         selectedEnergy={filters.energyLevels}
         selectedVibes={filters.vibes}
-        onEnergyChange={(level) => {
-          const newLevels = filters.energyLevels.includes(level)
-            ? filters.energyLevels.filter(l => l !== level)
-            : [...filters.energyLevels, level];
+        onEnergyChange={(levels) => {
+          // Check if all levels in the group are selected
+          const allSelected = levels.every(level => filters.energyLevels.includes(level));
+          
+          let newLevels;
+          if (allSelected) {
+            // Remove these levels
+            newLevels = filters.energyLevels.filter(l => !levels.includes(l));
+          } else {
+            // Add these levels (remove any that are already there to avoid duplicates)
+            newLevels = [...filters.energyLevels.filter(l => !levels.includes(l)), ...levels];
+          }
           setFilters({ ...filters, energyLevels: newLevels });
         }}
         onVibeChange={(vibeId) => {

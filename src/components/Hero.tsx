@@ -6,7 +6,7 @@ interface HeroProps {
   onSearch: (query: string) => void;
   selectedEnergy: number[];
   selectedVibes: string[];
-  onEnergyChange: (level: number) => void;
+  onEnergyChange: (levels: number[]) => void;
   onVibeChange: (vibeId: string) => void;
   onClearEnergyVibe: () => void;
 }
