@@ -61,7 +61,10 @@ const VIBES = [
   { id: 'date-night', label: 'date night' },
   { id: 'solo', label: 'solo' },
   { id: 'friends', label: 'friends' },
-  { id: 'work', label: 'work' }
+  { id: 'work', label: 'work' },
+  { id: 'online', label: 'online' },
+  { id: 'outdoor', label: 'outdoor' },
+  { id: 'physical', label: 'physical' }
 ];
 
 const HeroFilters = ({ 
