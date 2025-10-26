@@ -57,22 +57,11 @@ const ENERGY_COMMITMENTS = [
 ];
 
 const VIBES = [
-  { id: 'family', label: 'Family' },
-  { id: 'date', label: 'Date' },
-  { id: 'solo', label: 'Solo' },
-  { id: 'friends', label: 'Friends' },
-  { id: 'networking', label: 'Networking' },
-  { id: 'chill', label: 'Chill' },
-  { id: 'party', label: 'Party' },
-  { id: 'intellectual', label: 'Intellectual' },
-  { id: 'wellness', label: 'Wellness' },
-  { id: 'dog', label: 'Dog' },
-  { id: 'spiritual', label: 'Spiritual' },
-  { id: 'mindful', label: 'Mindful' },
-  { id: 'active', label: 'Active' },
-  { id: 'cultural', label: 'Cultural' },
-  { id: 'outdoor', label: 'Outdoor' },
-  { id: 'creative', label: 'Creative' }
+  { id: 'family', label: 'family' },
+  { id: 'date-night', label: 'date night' },
+  { id: 'solo', label: 'solo' },
+  { id: 'friends', label: 'friends' },
+  { id: 'work', label: 'work' }
 ];
 
 const HeroFilters = ({ 
@@ -134,17 +123,39 @@ const HeroFilters = ({
         <h2 className="text-lg font-semibold mb-3">
           what's your vibe?
         </h2>
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
-          {VIBES.map(vibe => (
-            <Badge
-              key={vibe.id}
-              variant={selectedVibes.includes(vibe.id) ? "default" : "outline"}
-              className="cursor-pointer flex-shrink-0 snap-start px-4 py-2 text-base transition-all hover:scale-105"
-              onClick={() => onVibeChange(vibe.id)}
-            >
-              <span className="whitespace-nowrap">{vibe.label}</span>
-            </Badge>
-          ))}
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+          {VIBES.map(vibe => {
+            const isSelected = selectedVibes.includes(vibe.id);
+            const hasAnySelection = selectedVibes.length > 0;
+            
+            return (
+              <button
+                key={vibe.id}
+                onClick={() => onVibeChange(vibe.id)}
+                style={{
+                  backgroundColor: isSelected ? '#6C3C65' : '#E8E2D8',
+                  color: isSelected ? '#FCFBF9' : '#2A2A2A',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                  opacity: hasAnySelection && !isSelected ? 0.7 : 1
+                }}
+                className="cursor-pointer flex-shrink-0 px-3 py-1.5 rounded-full font-medium text-[15px] transition-all duration-200 ease-in-out hover:scale-105 whitespace-nowrap"
+                onMouseEnter={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = '#F4B6A0';
+                    e.currentTarget.style.color = '#FCFBF9';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = '#E8E2D8';
+                    e.currentTarget.style.color = '#2A2A2A';
+                  }
+                }}
+              >
+                {vibe.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
