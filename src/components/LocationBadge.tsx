@@ -116,8 +116,18 @@ const LocationBadge = ({
             {location.city}, {location.state}
           </Badge>
         </PopoverTrigger>
-        <PopoverContent className="w-80" align="start">
-          <div className="space-y-4">
+        <PopoverContent 
+          className="w-80" 
+          align="start"
+          onInteractOutside={(e) => {
+            // Only close if clicking outside, not on the trigger
+            const target = e.target as HTMLElement;
+            if (target.closest('[role="button"]')) {
+              e.preventDefault();
+            }
+          }}
+        >
+          <div className="space-y-4" onClick={(e) => e.stopPropagation()}>
             <div className="space-y-2">
               <label 
                 htmlFor="location-input" 
@@ -132,7 +142,10 @@ const LocationBadge = ({
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
+                onClick={(e) => e.stopPropagation()}
+                onFocus={(e) => e.stopPropagation()}
                 disabled={isLoading}
+                autoFocus
               />
             </div>
             
