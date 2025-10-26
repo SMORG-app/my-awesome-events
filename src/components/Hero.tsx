@@ -25,8 +25,20 @@ const Hero = ({
         {/* Header */}
         <div className="text-center mb-6">
           <div className="mb-6">
-            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent uppercase">
-              SMORG
+            <h1 className="text-5xl md:text-6xl font-canela font-normal uppercase flex justify-center items-center" style={{ letterSpacing: '0.08em', color: '#6C3C65' }}>
+              <span>SM</span>
+              <span 
+                className="inline-block"
+                style={{
+                  background: 'linear-gradient(180deg, #CDE2D0 0%, #F4B6A0 50%, #6C3C65 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
+                O
+              </span>
+              <span>RG</span>
             </h1>
           </div>
           <h2 className="mb-4 text-3xl md:text-4xl font-bold text-foreground">
