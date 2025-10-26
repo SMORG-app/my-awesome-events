@@ -32,9 +32,6 @@ const Hero = ({
           <h2 className="mb-4 text-3xl md:text-4xl font-bold text-foreground">
             pick your vibe. match your energy commitment.
           </h2>
-          <p className="mb-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Match events to your energy level and vibe
-          </p>
           <div className="relative max-w-2xl mx-auto">
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
             <Input
