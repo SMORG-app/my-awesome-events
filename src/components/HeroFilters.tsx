@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { X } from "lucide-react";
+import { X, Info } from "lucide-react";
 
 interface HeroFiltersProps {
   selectedEnergy: number[];
@@ -65,13 +65,16 @@ const HeroFilters = ({
                   <button
                     onClick={() => onEnergyChange(energy.level)}
                     className={`
-                      flex-shrink-0 snap-start px-6 py-3 rounded-xl border-2 transition-all text-center min-w-[140px]
+                      flex-shrink-0 snap-start px-6 py-3 rounded-xl border-2 transition-all text-center min-w-[140px] relative
                       ${selectedEnergy.includes(energy.level)
                         ? 'bg-primary text-primary-foreground border-primary scale-105 shadow-lg'
                         : 'bg-card border-border hover:border-primary/50 hover:bg-accent'}
                     `}
                   >
-                    <div className="font-semibold">{energy.label}</div>
+                    <div className="font-semibold flex items-center justify-center gap-1">
+                      {energy.label}
+                      <Info className="w-3 h-3 opacity-50" />
+                    </div>
                   </button>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
