@@ -57,18 +57,22 @@ const ENERGY_COMMITMENTS = [
 ];
 
 const VIBES = [
-  { id: 'family-friendly', label: 'family-friendly' },
-  { id: 'date-night', label: 'date night' },
-  { id: 'solo-time', label: 'solo time' },
-  { id: 'friends-outing', label: 'friends outing' },
-  { id: 'work-networking', label: 'work / networking' },
-  { id: 'chill-low-key', label: 'chill / low-key' },
-  { id: 'high-energy-party', label: 'high energy / party' },
-  { id: 'thoughtful-intellectual', label: 'thoughtful / intellectual' },
-  { id: 'rejuvenating-wellness', label: 'rejuvenating / wellness' },
-  { id: 'intimate-niche', label: 'intimate / niche' },
-  { id: 'dog-friendly', label: 'dog-friendly' },
-  { id: 'spiritual-mindful', label: 'spiritual / mindful' }
+  { id: 'family', label: 'Family' },
+  { id: 'date', label: 'Date' },
+  { id: 'solo', label: 'Solo' },
+  { id: 'friends', label: 'Friends' },
+  { id: 'networking', label: 'Networking' },
+  { id: 'chill', label: 'Chill' },
+  { id: 'party', label: 'Party' },
+  { id: 'intellectual', label: 'Intellectual' },
+  { id: 'wellness', label: 'Wellness' },
+  { id: 'dog', label: 'Dog' },
+  { id: 'spiritual', label: 'Spiritual' },
+  { id: 'mindful', label: 'Mindful' },
+  { id: 'active', label: 'Active' },
+  { id: 'cultural', label: 'Cultural' },
+  { id: 'outdoor', label: 'Outdoor' },
+  { id: 'creative', label: 'Creative' }
 ];
 
 const HeroFilters = ({ 
