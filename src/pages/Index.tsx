@@ -17,7 +17,7 @@ const Index = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [view, setView] = useState<ViewType>(() => {
-    const saved = localStorage.getItem("vibeScoutView");
+    const saved = localStorage.getItem("smorgView");
     return (saved as ViewType) || "grid";
   });
   const [filters, setFilters] = useState<EventFilters>({
@@ -29,7 +29,7 @@ const Index = () => {
   });
 
   useEffect(() => {
-    localStorage.setItem("vibeScoutView", view);
+    localStorage.setItem("smorgView", view);
   }, [view]);
 
   const location = useLocation();

@@ -13,7 +13,7 @@ const Hero = ({ onSearch }: HeroProps) => {
           <div className="inline-flex items-center gap-3 rounded-xl border-2 border-primary/20 bg-card px-8 py-4 shadow-lg">
             <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary to-blue-500" />
             <span className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
-              VibeScout
+              Smorg
             </span>
           </div>
         </div>
