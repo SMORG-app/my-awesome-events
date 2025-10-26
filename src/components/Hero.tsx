@@ -19,54 +19,60 @@ const Hero = ({
   onVibeChange,
   onClearEnergyVibe 
 }: HeroProps) => {
+  // Determine O color based on energy commitment
+  const getOColor = () => {
+    if (selectedEnergy.length === 0) {
+      // Default gradient when no selection
+      return {
+        background: 'linear-gradient(180deg, #CDE2D0 0%, #F4B6A0 50%, #6C3C65 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text'
+      };
+    }
+    
+    // Check which commitment level is selected
+    const hasLowEnergy = selectedEnergy.some(level => [1, 2].includes(level));
+    const hasMediumEnergy = selectedEnergy.some(level => [3, 4].includes(level));
+    const hasHighEnergy = selectedEnergy.some(level => [5, 6].includes(level));
+    
+    if (hasLowEnergy) {
+      return { color: '#CDE2D0' }; // Sage Mist
+    } else if (hasMediumEnergy) {
+      return { color: '#F4B6A0' }; // Coral Peach
+    } else if (hasHighEnergy) {
+      return { color: '#6C3C65' }; // Plum Wine
+    }
+    
+    // Fallback to gradient
+    return {
+      background: 'linear-gradient(180deg, #CDE2D0 0%, #F4B6A0 50%, #6C3C65 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text'
+    };
+  };
+
   return (
     <section className="relative overflow-hidden bg-background py-8 px-4">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-6">
-          {/* Option 1: Wordmark with Gradient O */}
-          <div className="mb-6">
+          {/* Logo */}
+          <div className="mb-10">
             <h1 className="text-5xl md:text-6xl font-canela font-normal uppercase flex justify-center items-center" style={{ letterSpacing: '0.08em', color: '#6C3C65' }}>
               <span>SM</span>
               <span 
-                className="inline-block transition-all duration-1200 ease-in-out hover:animate-gradient-shift"
+                className="inline-block"
                 style={{
-                  background: 'linear-gradient(180deg, #CDE2D0 0%, #F4B6A0 50%, #6C3C65 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  backgroundSize: '100% 200%',
-                  transition: 'background-position 1.2s ease-in-out'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundPosition = '0% 100%';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundPosition = '0% 0%';
+                  ...getOColor(),
+                  transition: 'all 0.3s ease-in-out'
                 }}
               >
                 O
               </span>
               <span>RG</span>
             </h1>
-          </div>
-
-          {/* Option 3: Circular Symbol + Wordmark */}
-          <div className="mb-6 flex justify-center items-center gap-3">
-            {/* Gradient Circle Symbol */}
-            <div 
-              className="w-8 h-8 md:w-10 md:h-10 rounded-full"
-              style={{
-                background: 'linear-gradient(135deg, #CDE2D0 0%, #F4B6A0 50%, #6C3C65 100%)'
-              }}
-            />
-            {/* Wordmark */}
-            <h2 
-              className="text-3xl md:text-4xl font-inter font-medium uppercase"
-              style={{ letterSpacing: '0.08em', color: '#2A2A2A' }}
-            >
-              SMORG
-            </h2>
           </div>
 
           <h2 className="mb-4 text-3xl md:text-4xl font-bold text-foreground">
